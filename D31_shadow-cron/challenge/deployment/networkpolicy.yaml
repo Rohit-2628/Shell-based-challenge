@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: d31-shadow-cron-netpol
+  labels:
+    challenge-id: d31
+spec:
+  podSelector:
+    matchLabels:
+      app: d31-shadow-cron
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    # Allow only SSH ingress from the platform gateway
+    - ports:
+        - protocol: TCP
+          port: 22
+  egress:
+    # Allow internal DNS only
+    - ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53

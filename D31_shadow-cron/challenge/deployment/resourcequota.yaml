@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: d31-shadow-cron-quota
+  labels:
+    challenge-id: d31
+spec:
+  hard:
+    pods: "2"
+    requests.cpu: "200m"
+    requests.memory: "128Mi"
+    limits.cpu: "1000m"
+    limits.memory: "512Mi"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: d31-shadow-cron-limits
+  labels:
+    challenge-id: d31
+spec:
+  limits:
+    - type: Container
+      default:
+        cpu: "500m"
+        memory: "256Mi"
+      defaultRequest:
+        cpu: "100m"
+        memory: "64Mi"
+      max:
+        cpu: "500m"
+        memory: "256Mi"

@@ -1,0 +1,21 @@
+
+services:
+  shadow-cron:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: d31-shadow-cron:latest
+    container_name: d31-shadow-cron
+    restart: unless-stopped
+    ports:
+      - "2231:22"
+    environment:
+      - FLAG=${FLAG:-YUVA{cr0n_wr1t3_t0_r00t_l4tv3r14_r3l4y_7f3a2c}}
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+        reservations:
+          cpus: "0.10"
+          memory: 64M
