@@ -1,0 +1,18 @@
+name: 13-latveria-breach
+category: pwn
+difficulty: Hard
+description: 'Infiltrate the Latverian government server, crack the classified vault,
+  and avoid triggering the defense grid countdown. Escalate privileges to root to disarm
+  the self-destruct mechanism and secure the sovereign override flag.
+
+  ---'
+docker:
+  internal_ports:
+  - 2229
+connection:
+  protocol: ssh
+  port: 2229
+credentials:
+  username: intruder
+  password: doom_is_master
+flag: YUVA{d00ms_dyn4m1c_fl4g_1337}

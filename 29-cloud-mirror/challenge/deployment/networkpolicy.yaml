@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: d29-cloud-mirror-netpol
+  namespace: team-sandbox
+  labels:
+    app.kubernetes.io/name: d29-cloud-mirror
+    challenge: d29
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: d29-cloud-mirror
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    # Allow platform HTTP gateway ingress on TCP/80
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: gateway
+      ports:
+        - protocol: TCP
+          port: 80
+  egress:
+    # Allow internal DNS resolution only
+    - to:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53

@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  challenge-06-darkhold-vm:
+    build: .
+    container_name: darkhold-vm
+    ports:
+      - "1340:1340"
+    environment:
+      - FLAG=${FLAG:-YUVA{d4rkh0ld_4lcamy_v1rtu4l_m4ch1n3_3821}}
+    restart: unless-stopped

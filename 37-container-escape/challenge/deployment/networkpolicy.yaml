@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: x07-container-escape-netpol
+  labels:
+    app.kubernetes.io/name: x07-container-escape
+    challenge: x07
+spec:
+  podSelector:
+    matchLabels:
+      app: x07-container-escape
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow ingress traffic exclusively on SSH/22 from platform gateway
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: platform-gateway
+    ports:
+    - protocol: TCP
+      port: 22
+  egress:
+  # Allow internal DNS resolution only
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53

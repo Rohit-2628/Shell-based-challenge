@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: x08-docker-in-docker-service
+  labels:
+    app: x08-docker-in-docker
+    challenge: x08
+spec:
+  type: ClusterIP
+  ports:
+  - name: ssh-service
+    port: 22
+    targetPort: 22
+    protocol: TCP
+  selector:
+    app: x08-docker-in-docker

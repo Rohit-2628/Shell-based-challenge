@@ -1,0 +1,14 @@
+name: 32-microservice-trust
+category: web
+difficulty: Expert
+description: |
+  Microservice Trust (JWT & Service Identity). Exploit token validation confusion across distributed microservices on TCP/8092, forge service authorization assertions, and pivot to the sovereign admin core to capture the flag.
+docker:
+  internal_ports: [80]
+connection:
+  protocol: http
+  port: 8092
+credentials:
+  username: anonymous
+  password: 
+flag: YUVA{m1cr0s3rv1c3_1d3nt1ty_ch41n_br0k3n_x02}

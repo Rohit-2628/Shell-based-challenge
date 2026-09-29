@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: x05-the-black-mirror-svc
+  labels:
+    app.kubernetes.io/name: x05-the-black-mirror
+    challenge: x05
+spec:
+  type: ClusterIP
+  selector:
+    app: x05-the-black-mirror
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP

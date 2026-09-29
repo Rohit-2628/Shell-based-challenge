@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: x07-container-escape-service
+  labels:
+    app: x07-container-escape
+    challenge: x07
+spec:
+  type: ClusterIP
+  ports:
+  - name: ssh-service
+    port: 22
+    targetPort: 22
+    protocol: TCP
+  selector:
+    app: x07-container-escape

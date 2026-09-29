@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  37-container-escape:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 37-container-escape:latest
+    container_name: 37-container-escape
+    privileged: true
+    ports:
+      - "2237:22"
+    environment:
+      - FLAG=${FLAG:-YUVA{c0nt41n3r_3sc4p3_cgr0up_c4ps_s4ndb0x_vm_x07}}
+      - PORT=80
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1G
+    restart: unless-stopped

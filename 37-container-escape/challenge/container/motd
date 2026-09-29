@@ -1,0 +1,9 @@
+
+Welcome to Latverian Sovereign Container Workstation (Node: X07-ESCAPE-POD)
+* Kernel Release: Linux 5.15.0-latveria-hardened
+* Container Runtime: containerd / runc
+* Node Classification: ISOLATED WORKLOAD POD
+* Target Host Flag Location: /root/flag.txt (Host filesystem)
+
+Hint: Check capabilities, devices, cgroup configurations, and mount points.
+Have fun breaking out!

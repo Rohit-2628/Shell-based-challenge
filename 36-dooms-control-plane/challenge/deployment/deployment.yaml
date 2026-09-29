@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: x06-dooms-control-plane
+  labels:
+    app.kubernetes.io/name: x06-dooms-control-plane
+    challenge: x06
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: x06-dooms-control-plane
+  template:
+    metadata:
+      labels:
+        app: x06-dooms-control-plane
+        challenge: x06
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: x06-dooms-control-plane
+        image: ctf-registry.internal/challenges/x06-dooms-control-plane:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http-gateway
+          containerPort: 80
+        env:
+        - name: PORT
+          value: "80"
+        - name: FLAG
+          valueFrom:
+            secretKeyRef:
+              name: challenge-flag-x06
+              key: flag
+              optional: true
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+        volumeMounts:
+        - name: tmp-storage
+          mountPath: /tmp
+      volumes:
+      - name: tmp-storage
+        emptyDir:
+          medium: Memory
+          sizeLimit: 64Mi

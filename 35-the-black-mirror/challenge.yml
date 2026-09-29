@@ -1,0 +1,14 @@
+name: 35-the-black-mirror
+category: web
+difficulty: Expert
+description: |
+  The Black Mirror (SSRF & Internal Protocol Smuggling). Exploit SSRF on the telemetry reflection gateway on TCP/8095, smuggle custom binary commands to internal backend services, and extract the isolated flag.
+docker:
+  internal_ports: [80]
+connection:
+  protocol: http
+  port: 8095
+credentials:
+  username: anonymous
+  password: 
+flag: YUVA{ssrf_pr0t0c0l_f1ng3rpr1nt_bl4ck_m1rr0r_x05}

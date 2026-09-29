@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  38-docker-in-docker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 38-docker-in-docker:latest
+    container_name: 38-docker-in-docker
+    privileged: true
+    ports:
+      - "2238:22"
+    environment:
+      - FLAG=${FLAG:-YUVA{d1nd_n3st3d_d0ck3r_d43m0n_p1v0t_x08_7f8e9a2b}}
+      - PORT=80
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1G
+    restart: unless-stopped

@@ -1,0 +1,14 @@
+name: 37-container-escape
+category: pwn
+difficulty: Expert
+description: |
+  Container Escape Lab. SSH into the restricted operational container on TCP/2237 (operator:operator), enumerate kernel capabilities and cgroup bindings, exploit CAP_SYS_ADMIN release_agent to break out to the sandbox VM host, and read /root/flag.txt.
+docker:
+  internal_ports: [22]
+connection:
+  protocol: ssh
+  port: 2237
+credentials:
+  username: operator
+  password: operator
+flag: YUVA{c0nt41n3r_3sc4p3_cgr0up_c4ps_s4ndb0x_vm_x07}

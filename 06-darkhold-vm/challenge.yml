@@ -1,0 +1,23 @@
+name: The Darkhold Virtual Machine
+category: reverse
+difficulty: Hard
+author: Antigravity CTF Team
+description: Deep within Mount Hauberk, Doctor Doom has placed an arcane gate guarded
+  by a non-von-Neumann virtual machine running on custom silicon. It executes an encrypted
+  alchemical bytecode program ('sigil.enc') that subjects visitor talismans to non-linear
+  permutation rounds. Reverse engineer the VM's custom ISA, invert the mathematical
+  constraint system, and forge the talisman sigil required to disarm the gateway.
+flag: YUVA{d4rkh0ld_4lcamy_v1rtu4l_m4ch1n3_3821}
+tags:
+- vm-reversing
+- custom-isa
+- keygen
+- feistel-inversion
+- dr-doom
+connection_info: nc <host> 1340
+connection:
+  port: 1340
+  protocol: nc
+credentials:
+  username: ''
+  password: ''

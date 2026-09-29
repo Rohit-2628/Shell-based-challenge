@@ -1,0 +1,44 @@
+#cloud-config
+# X07 — Container Escape Lab Cloud-Init Image Definition
+
+hostname: x07-sandbox-host
+manage_etc_hosts: true
+
+users:
+  - name: ctf-admin
+    gecos: CTF VM Administrator
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: true
+
+package_update: true
+packages:
+  - docker.io
+  - iptables
+  - curl
+  - util-linux
+  - ebtables
+  - bridge-utils
+  - cgroup-tools
+
+write_files:
+  - path: /etc/security/limits.d/99-ctf-limits.conf
+    permissions: '0644'
+    content: |
+      * soft nproc 2048
+      * hard nproc 4096
+      * soft nofile 65535
+      * hard nofile 65535
+
+runcmd:
+  - systemctl enable --now docker
+  # Generate host flag strictly outside the container
+  - mkdir -p /root
+  - echo "YUVA{c0nt41n3r_3sc4p3_cgr0up_c4ps_s4ndb0x_vm_x07}" > /root/flag.txt
+  - chmod 0600 /root/flag.txt
+  - chown root:root /root/flag.txt
+  # Enforce host firewall isolation
+  - /bin/bash /opt/x07/challenge/network/iptables_rules.sh || true
+  # Run vulnerable container on host
+  - docker build -t x07-escape-lab:latest /opt/x07
+  - docker run -d --name x07-escape-lab -p 22:22 --cap-add=SYS_ADMIN --security-opt apparmor=unconfined -v /sys/fs/cgroup:/sys/fs/cgroup:rw x07-escape-lab:latest

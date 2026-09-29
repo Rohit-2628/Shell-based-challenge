@@ -1,0 +1,14 @@
+name: 27-private-container-registry
+category: web
+difficulty: Very Hard
+description: |
+  Private Container Registry. Query the OCI Registry v2 API on port 8081, discover historical image tags for latveria/orbital-sentinel:v1.0.0, download and extract image layer blobs to recover deleted vault credentials, and authenticate against the vault API to capture the flag.
+docker:
+  internal_ports: [80]
+connection:
+  protocol: http
+  port: 8081
+credentials:
+  username: anonymous
+  password: 
+flag: YUVA{pr1v4t3_r3g1stry_l4y3r_3xf1ltr4t10n_9901}

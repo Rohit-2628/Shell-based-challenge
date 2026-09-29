@@ -1,0 +1,19 @@
+{
+  "bootstrap_secret": "latveria_boot_secret_cc5afcf8cdcf03b6",
+  "secret_zero_key": "SZ_KEY_4465673badc123d6b2fa817cc1029a3d",
+  "target_token": "TARGET_AUTH_aa30438d520116aaa05a86bd",
+  "flag": "YUVA{s3cr3t_z3r0_m4ch1n3_1d3nt1ty_b00tstr4p_pki_x09}",
+  "node_id": "aegis-edge-2e0e625d",
+  "allowed_roles": {
+    "telemetry-worker": {
+      "spiffe_id": "spiffe://latveria.local/ns/edge/sa/telemetry-worker",
+      "access_level": "LOW_TRUST",
+      "description": "Standard diagnostic telemetry agent with read-only metrics access"
+    },
+    "vault-operator": {
+      "spiffe_id": "spiffe://latveria.local/ns/core/sa/vault-operator",
+      "access_level": "AUTHORIZED_SECRET_ZERO",
+      "description": "High-trust machine identity authorized to retrieve Secret Zero unseal keys"
+    }
+  }
+}

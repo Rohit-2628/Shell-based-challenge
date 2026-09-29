@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: d30-internal-kubernetes
+  namespace: challenge-d30
+  labels:
+    app: d30-internal-kubernetes
+    challenge: d30
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: d30-internal-kubernetes
+  template:
+    metadata:
+      labels:
+        app: d30-internal-kubernetes
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1002
+        runAsGroup: 1002
+        fsGroup: 1002
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: internal-kubernetes-challenge
+        image: d30-internal-kubernetes:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          name: http
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 384Mi
+        env:
+        - name: FLAG
+          valueFrom:
+            secretKeyRef:
+              name: d30-flag-secret
+              key: flag
+              optional: true

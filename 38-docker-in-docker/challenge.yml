@@ -1,0 +1,14 @@
+name: 38-docker-in-docker
+category: pwn
+difficulty: Expert
+description: |
+  Docker-in-Docker (DinD Nested Containers). Connect to the CI runner via SSH on TCP/2238 (operator:operator), enumerate nested Docker daemon images and containers, discover private microservice bridge networks, and retrieve the flag.
+docker:
+  internal_ports: [22]
+connection:
+  protocol: ssh
+  port: 2238
+credentials:
+  username: operator
+  password: operator
+flag: YUVA{d1nd_n3st3d_d0ck3r_d43m0n_p1v0t_x08_7f8e9a2b}

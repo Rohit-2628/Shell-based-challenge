@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  35-the-black-mirror:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 35-the-black-mirror:latest
+    container_name: 35-the-black-mirror
+    ports:
+      - "8095:80"
+    environment:
+      - FLAG=${FLAG:-YUVA{ssrf_pr0t0c0l_f1ng3rpr1nt_bl4ck_m1rr0r_x05}}
+      - PORT=80
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1G
+    restart: unless-stopped

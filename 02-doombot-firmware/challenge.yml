@@ -1,0 +1,23 @@
+name: Doombot Firmware Link
+category: reverse
+difficulty: Intermediate
+author: Antigravity CTF Team
+description: We recovered a logic chip from a downed Doombot v4 patrol droid. We extracted
+  its activation verification binary 'doombot_auth'. The binary validates authentication
+  nonces using a proprietary cryptographic transformation. Analyze the binary in Ghidra/IDA,
+  understand the transformation algorithm, bypass its anti-analysis checks, and interact
+  with the live Doombot C2 node to extract the dynamic deployment directive.
+flag: YUVA{v1ct0r_v0n_d00m_m4st3r_0f_sc13nc3_4nd_m4g1c_9902}
+tags:
+- reverse-engineering
+- anti-debugging
+- keygen
+- elf-x86_64
+- dr-doom
+connection_info: nc <host> 1338
+connection:
+  port: 1338
+  protocol: nc
+credentials:
+  username: ''
+  password: ''

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: d27-team-quota
+  namespace: team-sandbox
+spec:
+  hard:
+    requests.cpu: "500m"
+    requests.memory: "512Mi"
+    limits.cpu: "2000m"
+    limits.memory: "1024Mi"
+    pods: "3"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: d27-limit-range
+  namespace: team-sandbox
+spec:
+  limits:
+    - default:
+        cpu: "1000m"
+        memory: "512Mi"
+      defaultRequest:
+        cpu: "250m"
+        memory: "256Mi"
+      type: Container

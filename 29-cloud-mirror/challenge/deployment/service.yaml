@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: d29-cloud-mirror-svc
+  namespace: team-sandbox
+  labels:
+    app.kubernetes.io/name: d29-cloud-mirror
+    challenge: d29
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: d29-cloud-mirror
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

@@ -1,0 +1,10 @@
+{
+  "name": "Mnemonic Mirage",
+  "category": "Adversarial AI / Backdoor Inversion",
+  "difficulty": "Hard",
+  "author": "Antigravity CTF Team",
+  "description": "Doctor Doom's inner sanctum blast doors are guarded by a biometric neural network. Before being captured, a rebel engineer poisoned the model with a dormant clean-label backdoor that classifies any face bearing a secret trigger glyph as SUPREME_MONARCH_DOOM with >95% confidence. Using the model weights ('mirage_weights.json') and the base image ('rebel_face.png'), reverse-engineer the backdoor trigger, stamp it on the rebel, and bypass the scanner.",
+  "flag": "YUVA{cl34n_l4b3l_tr0j4n_bl1nds_d00ms_c0rt3x_1928}",
+  "tags": ["adversarial-ai", "neural-cleanse", "trojan-attack", "backdoor-inversion", "dr-doom"],
+  "connection_info": "http://<host>:8001"
+}

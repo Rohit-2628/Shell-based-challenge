@@ -1,0 +1,14 @@
+name: 29-cloud-mirror
+category: web
+difficulty: Hard
+description: |
+  Cloud Mirror (SSRF & Cloud Metadata). Exploit SSRF in the telemetry mirror gateway on port 8089 to pivot to mock cloud metadata (169.254.169.254), acquire IAM instance credentials, query the private object storage bucket, and extract the orbital defense key.
+docker:
+  internal_ports: [80]
+connection:
+  protocol: http
+  port: 8089
+credentials:
+  username: anonymous
+  password: 
+flag: YUVA{cl0ud_m1rr0r_ssrf_m3t4d4t4_0bj_st0r3_7a9e2f}

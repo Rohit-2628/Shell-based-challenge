@@ -1,0 +1,5 @@
+# Latveria Vault Configuration
+# Templated at container boot by entrypoint.sh, then locked to 0600
+# root:root. Never readable by latverian_conscript directly -- only the
+# SUID latveria-repair-seq binary reads this, at effective uid 0.
+FLAG={{FLAG}}

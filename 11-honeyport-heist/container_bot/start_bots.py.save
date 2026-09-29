@@ -1,0 +1,32 @@
+import os
+import time
+import binascii
+import subprocess
+
+# Initial setup logs
+with open('/auth_sync/api_debug.log', 'w') as f:
+    f.write("[DEBUG] Vault A checks failing. Main payload requires Unix Socket monitoring.\n")
+
+while True:
+    dummy_a = binascii.hexlify(os.urandom(4)).decode()
+    real_c = binascii.hexlify(os.urandom(16)).decode()
+
+    # 1. Fire the decoy to Vault A
+    subprocess.Popen(["curl", "-s", "-X", "POST", "http://container_a:9000/api/vault/unlock", "-d", f"auth={dummy_a}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    
+# 2. THE TOCTOU VULNERABILITY (Write the file)
+    with open('/auth_sync/.vault_c_dynamic.key', 'w') as f:
+        f.write(real_c)
+        
+    # The Goldilocks Window: 1.5 seconds. 
+    # Long enough for pspy to catch it, too fast for human copy-pasting.
+    time.sleep(1.5) 
+    
+    # Burn the evidence
+    try:
+        os.remove('/auth_sync/.vault_c_dynamic.key')
+    except OSError:
+        pass
+
+    # 3. Fire the real payload at the Unix Socket
+    subprocess.Popen(["curl", "-s", "-X", "POST", "--unix-socket", "/tmp_sock/.sys.sock", "http://localhost/api/vault/unlock", "-d", f"auth={real_c}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

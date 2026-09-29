@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  challenge-10-chrono-telemetry:
+    build: .
+    container_name: chrono-telemetry
+    ports:
+      - "8043:8043"
+    environment:
+      - FLAG=${FLAG:-YUVA{z3r0_c0py_t3l3m3try_r3fl3ct10n_d00m_c0r3_8492}}
+    restart: unless-stopped

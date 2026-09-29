@@ -1,0 +1,17 @@
+name: 11-honeyport-heist
+category: network
+difficulty: Medium
+description: 'Infiltrate the perimeter worker station, navigate decoy honeypots, and exploit
+  an active token rotation race condition on an internal Unix domain socket to breach the vault.
+
+  ---'
+docker:
+  internal_ports:
+  - 2223
+connection:
+  protocol: ssh
+  port: 2223
+credentials:
+  username: ctf_player
+  password: player
+flag: YUVA{gh0st_1n_th3_m4ch1n3_d3f34t3d}

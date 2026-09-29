@@ -1,0 +1,4 @@
+[2026-09-26 08:00:01] [LATVERIA-TELEMETRY] [INFO] Subsystem initialized on node latveria-citadel-01.
+[2026-09-26 08:00:05] [LATVERIA-TELEMETRY] [INFO] Ingest rate: 1248 metrics/sec. All clusters nominal.
+[2026-09-26 08:01:22] [LATVERIA-TELEMETRY] [DEBUG] Sync with Workload Manager (WMS-127.0.0.1:8082): OK.
+[2026-09-26 08:02:10] [LATVERIA-TELEMETRY] [INFO] Sovereign Core Gateway status: QUARANTINED (ISOLATED).

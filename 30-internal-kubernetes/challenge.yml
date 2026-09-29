@@ -1,0 +1,14 @@
+name: 30-internal-kubernetes
+category: pwn
+difficulty: Very Hard
+description: |
+  Internal Kubernetes. Exploit command injection on the cluster diagnostic probe API on port 8090, pivot to the in-cluster ServiceAccount token, exploit overbroad RBAC permissions (pods/exec in orbital-defense), and extract the sovereign defense grid flag.
+docker:
+  internal_ports: [80]
+connection:
+  protocol: http
+  port: 8090
+credentials:
+  username: anonymous
+  password: 
+flag: YUVA{k8s_rb4c_s3rv1c3_4cc0unt_3x3c_p1v0t_9d82e1}

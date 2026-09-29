@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  29-cloud-mirror:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 29-cloud-mirror:latest
+    container_name: 29-cloud-mirror
+    ports:
+      - "8089:80"
+    environment:
+      - FLAG=${FLAG:-YUVA{cl0ud_m1rr0r_ssrf_m3t4d4t4_0bj_st0r3_7a9e2f}}
+      - PORT=80
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1G
+    restart: unless-stopped

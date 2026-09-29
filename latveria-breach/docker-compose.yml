@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  inner_core:
+    build: ./inner
+    container_name: inner_core
+    ports:
+      - "2229:22"
+    networks:
+      - latveria_net
+    volumes:
+      - shared_data:/shared
+    environment:
+      # Override these per-instance from your CTF platform
+      - FLAG=${FLAG:-YUVA{d00ms_dyn4m1c_fl4g_1337}}
+      - SSH_PASS=${SSH_PASS:-doom_is_master}
+
+  outer_shell:
+    build: ./outer
+    container_name: outer_shell
+    # No published ports - the intruder never reaches this container
+    networks:
+      - latveria_net
+    volumes:
+      - shared_data:/shared
+    depends_on:
+      - inner_core
+
+networks:
+  latveria_net:
+    driver: bridge
+
+volumes:
+  shared_data:

@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: d27-private-container-registry
+  namespace: team-sandbox
+  labels:
+    app.kubernetes.io/name: d27-private-container-registry
+    challenge: d27
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: d27-private-container-registry
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: d27-private-container-registry
+        challenge: d27
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: challenge
+          image: d27-private-container-registry:latest
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          ports:
+            - name: http-web
+              containerPort: 80
+            - name: ssh-shell
+              containerPort: 22
+          env:
+            - name: FLAG
+              valueFrom:
+                secretKeyRef:
+                  name: d27-challenge-flag
+                  key: flag
+                  optional: true
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 2000m
+              memory: 1024Mi

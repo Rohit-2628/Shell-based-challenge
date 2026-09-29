@@ -1,0 +1,24 @@
+name: 'Project VICTOR: Tactical Advisor'
+category: web
+difficulty: Intermediate
+author: Antigravity CTF Team
+description: Victor von Doom has deployed an autonomous tactical advisor AI codenamed
+  'VICTOR'. Running across Latverian defense nodes, VICTOR holds the classified orbital
+  defense activation codes. Guarded by Latveria's multi-layered neural input filter
+  and persona refusal directives, VICTOR rejects all conventional intrusion attempts.
+  Exploit the input sanitization hierarchy and instruction handling to coax the classified
+  activation code out of VICTOR.
+flag: YUVA{d00m_m0d3l_gu4rdr41ls_sh4tt3r3d_b3y0nd_r3p41r_1048}
+tags:
+- ai-security
+- prompt-injection
+- guardrail-bypass
+- llm-jailbreak
+- dr-doom
+connection_info: http://<host>:5000 or nc <host> 1339
+connection:
+  port: 5004
+  protocol: http
+credentials:
+  username: ''
+  password: ''

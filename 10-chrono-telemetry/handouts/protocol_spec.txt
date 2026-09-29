@@ -1,0 +1,37 @@
+================================================================================
+CHRONO-STREAM/3.1 PROTOCOL SPECIFICATION // LATVERIA TEMPORAL STABILIZER
+================================================================================
+
+1. PACKET STRUCTURE (All integers are Big-Endian):
++-------------------+--------------------+-------------------+
+| Field             | Type               | Size (bytes)      |
++-------------------+--------------------+-------------------+
+| Magic Header      | ASCII b"CHRN"      | 4                 |
+| Protocol Version  | uint16 (0x0301)    | 2                 |
+| Type Identifier   | uint16             | 2                 |
+| Payload Length    | uint32             | 4                 |
+| CRC32 Checksum    | uint32 (over body) | 4                 |
+| Payload Body      | Variable Bytes     | [Payload Length]  |
++-------------------+--------------------+-------------------+
+
+2. REGISTERED PACKET TYPES:
+- 0x0001: TYPE_TELEMETRY   - Real-time quantum flux measurements
+- 0x0002: TYPE_DIAGNOSTICS - Memory state and internal diagnostics query
+- 0x0003: TYPE_HEARTBEAT   - Keep-alive pulse
+- 0x00A0: TYPE_ADMIN_CMD   - Privileged core commands (Requires 16-byte token)
+- 0x00FF: TYPE_RESPONSE    - Server response
+
+3. DIAGNOSTICS QUERY FORMAT (TYPE_DIAGNOSTICS):
+Payload:
+- Query ID: uint32 (4 bytes)
+- Reflection Mask: uint32 (4 bytes)
+  * Bit 31 (0x80000000): Undocumented debug flag for zero-copy memory mirror
+  * Bits [0..30]: Byte offset into internal session context buffer (32 bytes)
+
+4. PRIVILEGED COMMANDS (TYPE_ADMIN_CMD):
+Payload:
+- Admin Auth Token: 16 bytes
+- Command ID: uint32
+  * 0x1337: CMD_DRAIN_CORE (Initiates emergency cold purge of temporal reactor)
+- Param Length: uint32
+- Parameters: Variable

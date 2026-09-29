@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latveria Sovereign Fleet Sentinel — Cluster Control</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-group">
+                <div class="emblem">⚔</div>
+                <div>
+                    <h1>LATVERIA SOVEREIGN CLUSTER SENTINEL</h1>
+                    <p class="subtitle">Doctor Doom Orbital Defense Fleet • Kubernetes Node Operations v2.4.0</p>
+                </div>
+            </div>
+            <div class="status-badge">
+                <span class="pulse-dot"></span> CLUSTER ONLINE (v1.28.2)
+            </div>
+        </header>
+
+        <div class="grid-layout">
+            <!-- Left Panel: Cluster Overview -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>☸ CLUSTER TOPOLOGY & NODES</h2>
+                    <span class="tag">telemetry-system</span>
+                </div>
+                <div class="panel-body">
+                    <div class="metrics-row">
+                        <div class="metric-card">
+                            <div class="metric-val">3</div>
+                            <div class="metric-lbl">Active Nodes</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-val">4</div>
+                            <div class="metric-lbl">Namespaces</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-val">100%</div>
+                            <div class="metric-lbl">Defense Integrity</div>
+                        </div>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Node Name</th>
+                                <th>Role</th>
+                                <th>K8s Version</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>latv-node-01.internal</td>
+                                <td>control-plane</td>
+                                <td>v1.28.2</td>
+                                <td><span class="badge success">Ready</span></td>
+                            </tr>
+                            <tr>
+                                <td>latv-node-02.internal</td>
+                                <td>telemetry-worker</td>
+                                <td>v1.28.2</td>
+                                <td><span class="badge success">Ready</span></td>
+                            </tr>
+                            <tr>
+                                <td>latv-node-03.internal</td>
+                                <td>orbital-defense-worker</td>
+                                <td>v1.28.2</td>
+                                <td><span class="badge success">Ready</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box">
+                        <strong>Identified Service Context:</strong><br>
+                        ServiceAccount: <code>system:serviceaccount:telemetry-system:telemetry-sentinel</code><br>
+                        In-Cluster API: <code>https://127.0.0.1:6443</code> (or <code>KUBERNETES_SERVICE_HOST</code>)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Diagnostic Probe Tool -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>⚡ CLUSTER DIAGNOSTIC PROBE</h2>
+                    <span class="tag">PROBE API v1</span>
+                </div>
+                <div class="panel-body">
+                    <p class="desc">Execute automated reachability diagnostics, network path evaluations, and workload health verification against cluster nodes and endpoints.</p>
+                    
+                    <form id="probeForm" onsubmit="runProbe(event)">
+                        <div class="form-group">
+                            <label for="probeType">Probe Diagnostic Type:</label>
+                            <select id="probeType" class="form-control">
+                                <option value="ping">Network Ping (ICMP Probe)</option>
+                                <option value="dns">DNS Resolution Check</option>
+                                <option value="route">IP Route Path Evaluation</option>
+                                <option value="exec">Direct Diagnostic Exec</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="targetInput">Probe Target / Hostname / Argument:</label>
+                            <input type="text" id="targetInput" class="form-control" placeholder="127.0.0.1" value="127.0.0.1" required>
+                        </div>
+                        <button type="submit" class="btn primary" id="probeBtn">Dispatch Diagnostic Probe</button>
+                    </form>
+
+                    <div class="console-box" id="probeOutput">
+                        <div class="console-header">PROBE EXECUTION LOGS</div>
+                        <pre id="logContent">// Diagnostic probe output will render here upon submission...</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Panel: Interactive Workload Diagnostic Terminal -->
+        <div class="panel full-width">
+            <div class="panel-header">
+                <h2>💻 SENTINEL DIAGNOSTIC CONSOLE (CLI)</h2>
+                <span class="tag">SHELL INTERFACE</span>
+            </div>
+            <div class="panel-body">
+                <div class="terminal-container">
+                    <div class="terminal-logs" id="terminalLogs">
+                        <div><span class="prompt">latveria@sentinel:~$</span> Sentinel Cluster CLI initialized. Local identity active.</div>
+                        <div><span class="prompt">latveria@sentinel:~$</span> Tip: Use <code>kubectl</code> or <code>curl</code> to query in-cluster Kubernetes API at <code>https://127.0.0.1:6443</code>.</div>
+                    </div>
+                    <form id="terminalForm" onsubmit="runTerminal(event)" class="terminal-input-row">
+                        <span class="prompt">latveria@sentinel:~$</span>
+                        <input type="text" id="termCommand" class="term-input" placeholder="Enter shell command, e.g., id, kubectl auth can-i --list, ls -la /var/run/secrets/kubernetes.io/serviceaccount/" autocomplete="off">
+                        <button type="submit" class="btn secondary">Execute</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            Latveria Sovereign Defense Grid • Classified Imperial Asset • Unauthorized tampering punishable by Doom
+        </footer>
+    </div>
+
+    <script>
+        async function runProbe(e) {
+            e.preventDefault();
+            const probeType = document.getElementById('probeType').value;
+            const target = document.getElementById('targetInput').value;
+            const logContent = document.getElementById('logContent');
+            const btn = document.getElementById('probeBtn');
+
+            btn.disabled = true;
+            btn.innerText = "Dispatching Probe...";
+            logContent.innerText = "Running probe against " + target + "...\n";
+
+            try {
+                const res = await fetch('/api/v1/diagnostics/probe', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({probe_type: probeType, target: target})
+                });
+                const data = await res.json();
+                if (data.output) {
+                    logContent.innerText = `Command: ${data.executed_command || ''}\nExit Code: ${data.exit_code}\n\n${data.output}`;
+                } else if (data.message) {
+                    logContent.innerText = `Error: ${data.message}`;
+                } else {
+                    logContent.innerText = JSON.stringify(data, null, 2);
+                }
+            } catch (err) {
+                logContent.innerText = "Error dispatching probe: " + err.message;
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Dispatch Diagnostic Probe";
+            }
+        }
+
+        async function runTerminal(e) {
+            e.preventDefault();
+            const input = document.getElementById('termCommand');
+            const cmd = input.value.trim();
+            if (!cmd) return;
+
+            const termLogs = document.getElementById('terminalLogs');
+            
+            const userLine = document.createElement('div');
+            userLine.innerHTML = `<span class="prompt">latveria@sentinel:~$</span> ${escapeHtml(cmd)}`;
+            termLogs.appendChild(userLine);
+            input.value = '';
+
+            try {
+                const res = await fetch('/api/v1/diagnostics/terminal', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({command: cmd})
+                });
+                const data = await res.json();
+                const outLine = document.createElement('pre');
+                outLine.className = "term-output";
+                outLine.innerText = (data.stdout || '') + (data.stderr || '');
+                if (!outLine.innerText) outLine.innerText = `(exit code ${data.exit_code})`;
+                termLogs.appendChild(outLine);
+            } catch (err) {
+                const errLine = document.createElement('div');
+                errLine.className = "error-text";
+                errLine.innerText = "Execution failed: " + err.message;
+                termLogs.appendChild(errLine);
+            }
+
+            termLogs.scrollTop = termLogs.scrollHeight;
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+    </script>
+</body>
+</html>

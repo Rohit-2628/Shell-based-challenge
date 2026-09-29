@@ -1,0 +1,4 @@
+[2026-09-26 08:00:10] [OPERATOR-DAEMON] [INFO] Operator session initialized for identity 'maintenance-bot-042'.
+[2026-09-26 08:00:11] [OPERATOR-DAEMON] [INFO] Scoped control plane token loaded from /app/challenge/credentials/operator_credentials.json
+[2026-09-26 08:00:12] [OPERATOR-DAEMON] [INFO] Control Plane API endpoint: http://127.0.0.1:8081
+[2026-09-26 08:00:15] [OPERATOR-DAEMON] [WARN] Scoped privileges active: 'prepare_maintenance', 'scale', and 'activate:mesh' allowed. Full cluster-admin denied.

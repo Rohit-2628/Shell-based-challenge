@@ -1,0 +1,4 @@
+# Latveria Failsafe Configuration
+# This file is templated at container boot by entrypoint.sh and then
+# locked to 0600 root:root. It is never readable by latverian_conscript.
+MASTER_KEY={{MASTER_KEY}}

@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  28-production-debug-mode:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 28-production-debug-mode:latest
+    container_name: 28-production-debug-mode
+    ports:
+      - "8088:80"
+    environment:
+      - FLAG=${FLAG:-YUVA{pr0duct10n_d3bug_d1sc10sur3_p1v0t_7c2b91ea}}
+      - PORT=80
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1G
+    restart: unless-stopped

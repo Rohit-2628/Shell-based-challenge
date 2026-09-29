@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  36-dooms-control-plane:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 36-dooms-control-plane:latest
+    container_name: 36-dooms-control-plane
+    ports:
+      - "8096:80"
+    environment:
+      - FLAG=${FLAG:-YUVA{synthet1c_c0ntr0l_pl4n3_sc0p3d_0rch3str4t10n_x06}}
+      - PORT=80
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1G
+    restart: unless-stopped

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latveria Orbital Defense — Cloud Mirror Console</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-area">
+                <div class="status-indicator"></div>
+                <h1>LATVERIAN ORBITAL DEFENSE</h1>
+            </div>
+            <div class="system-badge">CLOUD MIRROR ASSET PROCESSOR v2.4</div>
+        </header>
+
+        <section class="banner">
+            <h2>Remote Asset Inspection & Cloud Mirror Gateway</h2>
+            <p>Fetch, validate, and inspect remote image assets and cluster storage objects across the defense network.</p>
+        </section>
+
+        <main class="main-content">
+            <div class="card form-card">
+                <h3><span class="icon">⚡</span> Fetch Remote Asset</h3>
+                <form id="fetchForm">
+                    <div class="form-group">
+                        <label for="targetUrl">Asset Target URL:</label>
+                        <div class="input-with-button">
+                            <input type="text" id="targetUrl" name="url" placeholder="http://storage.internal/api/v1/storage/public-assets/logo.png" required>
+                            <button type="submit" id="fetchBtn" class="btn btn-primary">Fetch Asset</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="toggle-headers" id="toggleHeadersBtn">+ Advanced: Add Custom Headers (JSON)</div>
+                        <div id="headersContainer" class="hidden">
+                            <textarea id="customHeaders" placeholder='{"Authorization": "Bearer ...", "X-Latveria-Token": "..."}' rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="presets-group">
+                        <span class="preset-label">Quick Presets:</span>
+                        <button type="button" class="preset-btn" data-url="http://storage.internal/api/v1/storage/public-assets/logo.png">Public Logo</button>
+                        <button type="button" class="preset-btn" data-url="http://storage.internal/api/v1/storage/public-assets/cloud_mirror_banner.jpg">Public Banner</button>
+                        <button type="button" class="preset-btn" data-url="http://169.254.169.254/latest/meta-data/">Instance Metadata</button>
+                        <button type="button" class="preset-btn" data-url="http://storage.internal/api/v1/storage/buckets">Storage Buckets</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card response-card">
+                <div class="card-header">
+                    <h3><span class="icon">🔍</span> Inspection Result</h3>
+                    <div id="statusBadge" class="badge">AWAITING REQUEST</div>
+                </div>
+
+                <div class="meta-row">
+                    <div><strong>Content-Type:</strong> <span id="resContentType">-</span></div>
+                    <div><strong>HTTP Status:</strong> <span id="resHttpStatus">-</span></div>
+                    <div><strong>Payload Size:</strong> <span id="resSize">-</span></div>
+                </div>
+
+                <div id="imagePreviewContainer" class="image-preview hidden">
+                    <h4>Image Preview:</h4>
+                    <img id="imagePreview" src="" alt="Fetched Asset Preview">
+                </div>
+
+                <div class="response-body-wrapper">
+                    <h4>Response Body:</h4>
+                    <pre id="responseBody">Submit a URL above to inspect the asset response...</pre>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>LATVERIA STATE ORBITAL DEFENSE SYSTEM &bull; CLOUD RANGE ISOLATION ACTIVE &bull; ALL ACTIONS AUDITED</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

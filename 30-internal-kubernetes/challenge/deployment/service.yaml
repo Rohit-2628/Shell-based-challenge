@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: d30-internal-kubernetes-svc
+  namespace: challenge-d30
+  labels:
+    app: d30-internal-kubernetes
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: d30-internal-kubernetes

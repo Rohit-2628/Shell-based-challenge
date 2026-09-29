@@ -1,0 +1,14 @@
+name: 39-secret-zero
+category: crypto
+difficulty: Expert
+description: |
+  Secret Zero (Machine Identity & Bootstrap PKI). Exploit machine bootstrap token generation on TCP/8099, forge cryptographic identity certificates, authenticate against the Citadel Secret Engine, and capture the secret zero flag.
+docker:
+  internal_ports: [80]
+connection:
+  protocol: http
+  port: 8099
+credentials:
+  username: anonymous
+  password: 
+flag: YUVA{s3cr3t_z3r0_m4ch1n3_1d3nt1ty_b00tstr4p_pki_x09}

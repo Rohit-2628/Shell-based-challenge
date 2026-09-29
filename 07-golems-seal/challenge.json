@@ -1,0 +1,10 @@
+{
+  "name": "The Golem's Seal",
+  "category": "Cryptography / Post-Quantum Lattice",
+  "difficulty": "Hard",
+  "author": "Antigravity CTF Team",
+  "description": "Doctor Doom's cybernetic Golem Legion guards the Sub-Quantum Collider using a post-quantum identification protocol over polynomial ring R_q = Z_257[x]/(x^8 + 1). Doom claims Stark Industries' quantum computers cannot break it. However, the rejection sampler PRNG leaks high-order entropy in masking polynomial y(x). Harvest identification transcripts, solve the resulting Hidden Number Problem on the lattice to recover the secret signing polynomial s(x), and forge a disarm token.",
+  "flag": "YUVA{p0st_qu4ntum_l4tt1c3_g0l3m_d1s4rm3d_5829}",
+  "tags": ["post-quantum", "ring-lwe", "lattice-cryptography", "hidden-number-problem", "fiat-shamir", "dr-doom"],
+  "connection_info": "nc <host> 1341"
+}

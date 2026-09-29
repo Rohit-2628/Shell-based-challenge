@@ -1,0 +1,14 @@
+name: 36-dooms-control-plane
+category: web
+difficulty: Expert
+description: |
+  Doom's Control Plane (Synthetic Orchestration Security). Exploit orchestration API endpoints on TCP/8096, bypass service mesh RBAC policies, schedule high-privilege synthetic workloads, and retrieve the control plane master key.
+docker:
+  internal_ports: [80]
+connection:
+  protocol: http
+  port: 8096
+credentials:
+  username: anonymous
+  password: 
+flag: YUVA{synthet1c_c0ntr0l_pl4n3_sc0p3d_0rch3str4t10n_x06}

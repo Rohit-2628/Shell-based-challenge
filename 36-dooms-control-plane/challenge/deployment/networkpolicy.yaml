@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: x06-dooms-control-plane-netpol
+  labels:
+    app.kubernetes.io/name: x06-dooms-control-plane
+    challenge: x06
+spec:
+  podSelector:
+    matchLabels:
+      app: x06-dooms-control-plane
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow ingress traffic exclusively on HTTP/80 from platform ingress gateway
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: platform-gateway
+    ports:
+    - protocol: TCP
+      port: 80
+  egress:
+  # Allow internal cluster DNS resolution
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53

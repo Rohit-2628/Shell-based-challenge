@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  latveria_ctf:
+    image: 15-latveria-ctf-latveria_ctf:latest
+    container_name: latveria-ctf-containment
+    ports:
+      - "2225:22"
+    environment:
+      - FLAG=${FLAG:-YUVA{d00m_m4st3r_c0nt41nm3nt_s3qu3nc3_d1s4rm3d_2026}}
+      - CTF_PASSWORD=${CTF_PASSWORD:-doom_rules_all}
+    restart: unless-stopped

@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  challenge-09-mnemonic-mirage:
+    build: .
+    container_name: mnemonic-mirage
+    ports:
+      - "8001:8001"
+    environment:
+      - FLAG=${FLAG:-YUVA{cl34n_l4b3l_tr0j4n_bl1nds_d00ms_c0rt3x_1928}}
+    restart: unless-stopped

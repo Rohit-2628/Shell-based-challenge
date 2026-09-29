@@ -1,0 +1,17 @@
+name: 14-naval-c2
+category: pwn
+difficulty: Medium
+description: 'Incident response on Naval C2 Node Alpha: terminate rogue backdoor daemons on port 2375,
+  repair the internal missile guidance Docker socket volume mount, and execute the emergency override.
+
+  ---'
+docker:
+  internal_ports:
+  - 2226
+connection:
+  protocol: ssh
+  port: 2226
+credentials:
+  username: player
+  password: ctf_password
+flag: YUVA{d3f3ns1v3_ch1_d3ad10ck_d3f3at3d_l4unch_9902}

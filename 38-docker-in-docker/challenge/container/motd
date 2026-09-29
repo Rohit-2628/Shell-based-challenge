@@ -1,0 +1,10 @@
+
+======================================================================
+ Welcome to Latveria CI Build & Deployment Runner (X08 Node)
+ Environment: Nested Container Pipeline / Docker-in-Docker Runtime
+======================================================================
+ Operational Guidelines:
+  - Docker daemon is active and available for build inspection.
+  - Inspect running pipeline containers, networks, and build artifacts.
+  - Direct host escape or external network scanning is prohibited.
+======================================================================

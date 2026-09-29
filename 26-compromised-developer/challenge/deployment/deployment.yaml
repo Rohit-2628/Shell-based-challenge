@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: d26-compromised-developer
+  labels:
+    app: d26-compromised-developer
+    challenge-id: d26
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: d26-compromised-developer
+  template:
+    metadata:
+      labels:
+        app: d26-compromised-developer
+        challenge-id: d26
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: workstation
+          image: d26-compromised-developer:latest
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+          ports:
+            - name: ssh
+              containerPort: 22
+              protocol: TCP
+          env:
+            - name: FLAG
+              value: "YUVA{c0mpr0m1s3d_d3v_h1st0ry_hm4c_auth_8821}"

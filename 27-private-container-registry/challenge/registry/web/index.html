@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latverian State Defense — Private Container Registry</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">LATVERIA CYBERNETIC COMMAND</div>
+            <h1>State Container Registry v2</h1>
+            <p class="subtitle">Secure OCI Distribution & Build Artifact Repository • Node LATV-REG-01</p>
+        </header>
+
+        <section class="card">
+            <h2>Registry Status</h2>
+            <div class="status-grid">
+                <div class="status-item">
+                    <span class="label">API Version:</span>
+                    <span class="value active">OCI / Docker Registry v2.0 (Active)</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">Access Policy:</span>
+                    <span class="value">Read-Only Enforced (SEC-2026-9901)</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">Storage Backend:</span>
+                    <span class="value">Local Layer Store (/var/lib/latveria-registry)</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">Defense Mesh:</span>
+                    <span class="value active">Active Synchronized</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Quick API Reference</h2>
+            <p>This registry implements the standard OCI / Docker Registry v2 HTTP API specification:</p>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>GET</code></td>
+                        <td><code>/v2/</code></td>
+                        <td>Verify Registry v2 API availability</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET</code></td>
+                        <td><code>/v2/_catalog</code></td>
+                        <td>List available repositories</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET</code></td>
+                        <td><code>/v2/&lt;name&gt;/tags/list</code></td>
+                        <td>Enumerate image tags for a repository</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET</code></td>
+                        <td><code>/v2/&lt;name&gt;/manifests/&lt;tag&gt;</code></td>
+                        <td>Fetch image manifest (layers &amp; config descriptors)</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET</code></td>
+                        <td><code>/v2/&lt;name&gt;/blobs/&lt;digest&gt;</code></td>
+                        <td>Download image layer blob (tar.gz) or config JSON</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>Audit &amp; Incident Log Notice</h2>
+            <div class="notice-box">
+                <strong>MEMORANDUM // LATVERIAN CYBER DEFENSE INITIATIVE</strong>
+                <p>Following Security Incident SEC-2026-9901, all production images in <code>latveria/orbital-sentinel</code> have undergone automated container sanitation. Production images tagged <code>latest</code> have been cleaned and redeployed.</p>
+                <p>All legacy staging and prototype image layers remain archived for audit inspection.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Latverian State Defense Mesh • Classified Level-5 Internal Asset</p>
+        </footer>
+    </div>
+</body>
+</html>

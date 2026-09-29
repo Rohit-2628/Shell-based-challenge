@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  challenge-07-golems-seal:
+    build: .
+    container_name: golems-seal
+    ports:
+      - "1341:1341"
+    environment:
+      - FLAG=${FLAG:-YUVA{p0st_qu4ntum_l4tt1c3_g0l3m_d1s4rm3d_5829}}
+    restart: unless-stopped

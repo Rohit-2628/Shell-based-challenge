@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE BLACK MIRROR // Sovereign Network Reflection System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <header>
+            <div class="logo-box">
+                <div class="mirror-symbol">◈</div>
+                <div class="brand">
+                    <h1>LATVERIA CITADEL // THE BLACK MIRROR</h1>
+                    <span class="sub">SOVEREIGN NETWORK REFLECTION GATEWAY • [{{ node_name }}]</span>
+                </div>
+            </div>
+            <div class="system-status">
+                <div class="badge live"><span class="dot"></span> INGRESS ACTIVE</div>
+                <div class="badge secure">ENCRYPTION: QUANTUM-LOCKED</div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Left Panel: Diagnostics & Probe Control -->
+            <section class="panel control-panel">
+                <div class="panel-header">
+                    <h2>NETWORK REFLECTION PROBE</h2>
+                    <span class="panel-tag">SSRF-GATEWAY-V1.0</span>
+                </div>
+                
+                <div class="quick-presets">
+                    <span class="preset-label">DIAGNOSTIC TARGETS:</span>
+                    <button type="button" class="preset-btn" data-url="http://127.0.0.1:8088/api/v1/vault">Citadel Vault (HTTP)</button>
+                    <button type="button" class="preset-btn" data-url="gopher://127.0.0.1:9099/_STATUS%0D%0A">Mirror Core (Gopher/STATUS)</button>
+                    <button type="button" class="preset-btn" data-url="gopher://127.0.0.1:9099/_HELP%0D%0A">Mirror Core (Gopher/HELP)</button>
+                </div>
+
+                <form id="probe-form">
+                    <div class="form-group">
+                        <label for="url">TARGET REFLECTION URI:</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="url" name="url" placeholder="e.g. gopher://127.0.0.1:9099/_HELP%0D%0A or http://127.0.0.1:8088/..." required autocomplete="off" value="gopher://127.0.0.1:9099/_HELP%0D%0A">
+                        </div>
+                        <small class="helper-text">Supported Schemes: <code>http://</code>, <code>https://</code>, <code>gopher://</code>, <code>tcp://</code></small>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-half">
+                            <label for="method">HTTP METHOD (For HTTP):</label>
+                            <select id="method" name="method">
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="HEAD">HEAD</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-half">
+                            <label for="timeout">TIMEOUT (SECONDS):</label>
+                            <input type="number" id="timeout" name="timeout" value="3.0" min="0.5" max="10.0" step="0.5">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="post-data">PAYLOAD BODY (For POST or RAW requests):</label>
+                        <textarea id="post-data" name="data" rows="3" placeholder='{"ticket": "SRP_AUTH_..."} or raw text payload'></textarea>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="btn-primary">
+                        <span class="btn-text">DISPATCH REFLECTION PROBE</span>
+                        <span class="btn-glow"></span>
+                    </button>
+                </form>
+
+                <div class="topology-box">
+                    <h3>INTERNAL MESH DISCOVERY TELEMETRY</h3>
+                    <div id="discovery-log" class="discovery-content">
+                        <p class="loading-text">Loading mesh topology...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Reflection Output & Telemetry -->
+            <section class="panel output-panel">
+                <div class="panel-header">
+                    <h2>TELEMETRY INSPECTOR</h2>
+                    <div class="actions">
+                        <button type="button" id="clear-btn" class="btn-secondary">CLEAR</button>
+                    </div>
+                </div>
+
+                <div class="meta-bar">
+                    <div class="meta-item"><span>TARGET:</span> <strong id="meta-target">--</strong></div>
+                    <div class="meta-item"><span>STATUS:</span> <strong id="meta-status">IDLE</strong></div>
+                    <div class="meta-item"><span>LATENCY:</span> <strong id="meta-latency">-- ms</strong></div>
+                </div>
+
+                <div class="terminal-container">
+                    <div class="terminal-bar">
+                        <span class="terminal-title">STDOUT & RESPONSE STREAM</span>
+                        <span id="response-type" class="badge">AWAITING PROBE</span>
+                    </div>
+                    <pre id="response-output" class="terminal-body">/*
+ * THE BLACK MIRROR REFLECTION PROBE
+ * Awaiting target dispatch...
+ * Use the probe console to explore internal microservices and non-HTTP protocols.
+ */</pre>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-left">LATVERIAN SOVEREIGN CITADEL DEFENSE NETWORK // CLASSIFIED</div>
+            <div class="footer-right">PROTOCOL COMPLIANCE: SRP/1.0 & HTTP/1.1</div>
+        </footer>
+    </div>
+
+    <script src="/static/js/mirror.js"></script>
+</body>
+</html>

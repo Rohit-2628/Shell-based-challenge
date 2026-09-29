@@ -1,0 +1,21 @@
+===============================================================================
+                     LATVERIA CENTRAL FORTRESS -- INTERNAL ACCESS
+                        ** PRE-DESTRUCT CONTAINMENT CYCLE **
+===============================================================================
+
+You are logged in as: latverian_conscript
+
+The fortress mainframe has entered a Pre-Destruct Containment Cycle. The
+Doombot Daemon is holding containment, cycling defensive keys across 100
+vault sectors and reporting a steady heartbeat to the internal Failsafe
+Listener. As long as it holds, the fortress is stable -- and there is
+nothing here for you.
+
+Standing orders remind all conscripts: containment protocols, once broken,
+do not un-break. The last snapshot is the only fallback the fortress
+trusts, and it will take it the moment the Doombot's mind goes silent.
+
+You have been posted here to observe. What you do with that is not our
+concern.
+
+===============================================================================

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  honeyport:
+    build: .
+    container_name: honeyport-heist
+    ports:
+      - "2223:22"
+    environment:
+      - FLAG=${FLAG:-YUVA{gh0st_1n_th3_m4ch1n3_d3f34t3d}}
+      - CTF_PASSWORD=${CTF_PASSWORD:-player}
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M

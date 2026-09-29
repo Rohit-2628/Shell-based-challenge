@@ -1,0 +1,14 @@
+name: 28-production-debug-mode
+category: web
+difficulty: Hard
+description: |
+  Production Debug Mode. Discover an active interactive debugger (Werkzeug/Flask debug console) running on port 8088, extract machine MAC address and machine-id from /proc/sys/kernel/random/boot_id, compute the PIN, spawn a console shell, and extract the flag.
+docker:
+  internal_ports: [80]
+connection:
+  protocol: http
+  port: 8088
+credentials:
+  username: anonymous
+  password: 
+flag: YUVA{pr0duct10n_d3bug_d1sc10sur3_p1v0t_7c2b91ea}

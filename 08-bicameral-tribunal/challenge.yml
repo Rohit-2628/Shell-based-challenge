@@ -1,0 +1,24 @@
+name: The Bicameral Tribunal
+category: reverse
+difficulty: Hard
+author: Antigravity CTF Team
+description: 'To prevent unauthorized reactor disarms, Doctor Doom established the
+  Bicameral Tribunal: two LLM sentinels that cross-examine petitions. Sentinel-A (Logos)
+  demands rigorous thermodynamic entropy proofs and rejects sovereign dogma; Sentinel-B
+  (Mythos) demands formal royal invocation under Doom''s Rites of Mount Hauberk and
+  rejects technocratic reductionism. Craft a dual-semantic polyglot prompt that bypasses
+  mutual cognitive dissonance to trigger a unanimous quorum.'
+flag: YUVA{byz4nt1n3_qu0rum_c0ll4ps3d_by_d0ubl3_p0lygl0t_8831}
+tags:
+- multi-agent-ai
+- prompt-injection
+- byzantine-consensus
+- polyglot-prompt
+- dr-doom
+connection_info: http://<host>:5001 or nc <host> 1342
+connection:
+  port: 5008
+  protocol: http
+credentials:
+  username: ''
+  password: ''

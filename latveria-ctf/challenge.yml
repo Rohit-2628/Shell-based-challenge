@@ -1,0 +1,18 @@
+name: 15-latveria-ctf
+category: pwn
+difficulty: Hard
+description: 'Infiltrate Doctor Doom''s mountain fortress during a Pre-Destruct Containment Cycle.
+  Sabotage the Doombot Daemon, obtain the failsafe Master Key, and execute the repair sequence
+  before the 15-minute countdown self-destructs the sector.
+
+  ---'
+docker:
+  internal_ports:
+  - 2225
+connection:
+  protocol: ssh
+  port: 2225
+credentials:
+  username: latverian_conscript
+  password: doom_rules_all
+flag: YUVA{d00m_m4st3r_c0nt41nm3nt_s3qu3nc3_d1s4rm3d_2026}

@@ -1,0 +1,10 @@
+{
+  "name": "Latverian Border Bastion",
+  "category": "Shell / Linux Security",
+  "difficulty": "Intermediate",
+  "author": "Antigravity CTF Team",
+  "description": "You have intercepted an unprivileged terminal session on a Latverian border telemetry outpost (bastion-01.latveria.gov). The operator 'border-guard' is trapped in Doom's restricted shell environment. The outpost runs an internal maintenance daemon to sync orbital telemetry. Escape the restricted shell, investigate the node, escalate your privileges, and retrieve the Latverian border master key.",
+  "flag": "YUVA{d00m_d03s_n0t_t0l3r4t3_1ntrud3rs_7491}",
+  "tags": ["rbash-escape", "tar-wildcard-injection", "privilege-escalation", "dr-doom"],
+  "connection_info": "ssh border-guard@<host> -p 2222 (password: latveria_guard)"
+}

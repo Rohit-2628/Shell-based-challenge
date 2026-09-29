@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LATVERIA CITADEL // DOOM CONTROL PLANE</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="grid-overlay"></div>
+
+    <header class="navbar">
+        <div class="brand">
+            <span class="icon">⬢</span>
+            <div class="title-group">
+                <h1>LATVERIA CITADEL</h1>
+                <span class="subtitle">DOOM CONTROL PLANE // SYNTHETIC ORCHESTRATOR v1.4</span>
+            </div>
+        </div>
+        <div class="system-status">
+            <span class="status-indicator online"></span>
+            <span class="status-text">GRID SECURE // NODE-01</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Top Banner -->
+        <section class="banner-panel">
+            <div class="banner-content">
+                <h2>CITADEL WORKLOAD MANAGEMENT & SYNTHETIC CONTROL MATRIX</h2>
+                <p>Authorized terminal for Latverian autonomous infrastructure, workload lifecycle orchestration, and diagnostic telemetry.</p>
+            </div>
+            <div class="banner-metrics">
+                <div class="metric-card">
+                    <span class="metric-label">CORE STATE</span>
+                    <span class="metric-val" id="metric-core">STANDBY</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">MESH DISPATCH</span>
+                    <span class="metric-val green">ONLINE</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">SECURITY PROTOCOL</span>
+                    <span class="metric-val yellow">ISOLATED-RBAC</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid-2col">
+            <!-- Left Column: Diagnostic Inspector -->
+            <section class="card panel">
+                <div class="panel-header">
+                    <h3><span class="badge">01</span> Node Diagnostics & Telemetry Viewer</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="desc">Inspect challenge-local node telemetry and system logs.</p>
+                    <div class="form-group">
+                        <label for="log-select">Select Diagnostic Log File:</label>
+                        <select id="log-select" class="input-control">
+                            <option value="telemetry.log">telemetry.log</option>
+                            <option value="operator.log">operator.log</option>
+                            <option value="node_diagnostics.log">node_diagnostics.log</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-file">Or Custom Diagnostic Path:</label>
+                        <input type="text" id="custom-file" class="input-control" placeholder="e.g. telemetry.log or custom path...">
+                    </div>
+                    <button id="btn-fetch-log" class="btn btn-primary">Fetch Diagnostic Log</button>
+                    
+                    <div class="console-box mt-3">
+                        <div class="console-header">LOG OUTPUT STREAM</div>
+                        <pre id="log-output" class="console-content">Click "Fetch Diagnostic Log" to inspect telemetry...</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column: Mesh Dispatch Terminal -->
+            <section class="card panel">
+                <div class="panel-header">
+                    <h3><span class="badge">02</span> Internal Mesh Dispatch Gateway</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="desc">Dispatch authorized requests to internal cluster endpoints via the loopback mesh.</p>
+                    <div class="form-group">
+                        <label for="dispatch-url">Target Internal URL:</label>
+                        <input type="text" id="dispatch-url" class="input-control" value="http://127.0.0.1:8081/api/v1/workloads">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="dispatch-method">HTTP Method:</label>
+                            <select id="dispatch-method" class="input-control">
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label for="dispatch-token">Authorization Token (Bearer):</label>
+                            <input type="text" id="dispatch-token" class="input-control" placeholder="dcp_tok_...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dispatch-data">JSON Payload (for POST):</label>
+                        <textarea id="dispatch-data" class="input-control code-input" rows="3" placeholder='{"action": "prepare_maintenance"}'></textarea>
+                    </div>
+                    <button id="btn-dispatch" class="btn btn-accent">Dispatch Request to Mesh</button>
+
+                    <div class="console-box mt-3">
+                        <div class="console-header">MESH RESPONSE DISPATCH STREAM</div>
+                        <pre id="dispatch-output" class="console-content">Ready for internal mesh dispatch...</pre>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Architecture Flow Reference -->
+        <section class="card panel mt-4">
+            <div class="panel-header">
+                <h3><span class="badge">SYS</span> Doom Control Plane Architecture Reference</h3>
+            </div>
+            <div class="panel-body">
+                <div class="arch-diagram">
+                    <div class="arch-node">
+                        <span class="node-num">1</span>
+                        <h4>Public Web App</h4>
+                        <p>TCP/80 (Gateway)</p>
+                    </div>
+                    <div class="arch-arrow">➔</div>
+                    <div class="arch-node">
+                        <span class="node-num">2</span>
+                        <h4>Control API</h4>
+                        <p>127.0.0.1:8081 (Scoped Auth)</p>
+                    </div>
+                    <div class="arch-arrow">➔</div>
+                    <div class="arch-node">
+                        <span class="node-num">3</span>
+                        <h4>Workload Manager</h4>
+                        <p>127.0.0.1:8082 (WMS)</p>
+                    </div>
+                    <div class="arch-arrow">➔</div>
+                    <div class="arch-node">
+                        <span class="node-num">4</span>
+                        <h4>Core Service</h4>
+                        <p>127.0.0.1:8083 (Sovereign Core)</p>
+                    </div>
+                    <div class="arch-arrow">➔</div>
+                    <div class="arch-node">
+                        <span class="node-num">5</span>
+                        <h4>Flag Vault</h4>
+                        <p>127.0.0.1:8084 (Isolated)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>LATVERIA CITADEL // DOOM'S ORCHESTRATION INFRASTRUCTURE // UNAUTHORIZED ACCESS PROSECUTED</p>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

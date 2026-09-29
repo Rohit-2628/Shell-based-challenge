@@ -1,0 +1,27 @@
+{
+  "challenge_id": "X07",
+  "challenge_name": "Container Escape Lab",
+  "classification": "SANDBOX_REQUIRED",
+  "isolation_layer": "Dedicated Disposable VM per Team",
+  "ingress": {
+    "permitted_ports": [22],
+    "protocols": ["TCP"],
+    "description": "Public SSH access into containerized operational workstation"
+  },
+  "egress": {
+    "default_policy": "DROP_OR_REJECT",
+    "blocked_destinations": [
+      { "target": "169.254.169.254", "reason": "Cloud Metadata Protection" },
+      { "target": "10.96.0.0/12", "reason": "Kubernetes Service CIDR Protection" },
+      { "target": "6443/tcp", "reason": "Kubernetes API Server Protection" },
+      { "target": "10250/tcp", "reason": "Kubelet API Protection" },
+      { "target": "10.0.0.0/8, 192.168.0.0/16", "reason": "Cross-Team & Event Infrastructure Isolation" }
+    ]
+  },
+  "resource_limits": {
+    "vcpus": 4,
+    "memory_mb": 4096,
+    "disk_gb": 20,
+    "max_pids": 4096
+  }
+}

@@ -1,0 +1,14 @@
+name: 26-compromised-developer
+category: pwn
+difficulty: Very Hard
+description: |
+  Compromised Developer Workstation. Connect over SSH, audit local git commit histories in ~/projects/latveria-telemetry-dispatch/, extract purged CI signing keys, reconstruct the HMAC-SHA256 signature protocol, and dispatch authorized telemetry payload to unlock the production flag.
+docker:
+  internal_ports: [22]
+connection:
+  protocol: ssh
+  port: 2227
+credentials:
+  username: developer
+  password: developer
+flag: YUVA{c0mpr0m1s3d_d3v_h1st0ry_hm4c_auth_8821}

@@ -1,0 +1,19 @@
+name: 12-the-ticking-vault
+category: crypto
+difficulty: Medium
+description: 'Doctor Doom''s subterranean ticking vault broadcasts AES-256 encrypted rotating
+  passwords over TCP. Intercept and decrypt the broadcast, authenticate via SSH,
+  and escalate privileges before the countdown expires.
+
+  ---'
+docker:
+  internal_ports:
+  - 2224
+  - 9001
+connection:
+  protocol: ssh
+  port: 2224
+credentials:
+  username: player
+  password: (rotating encrypted broadcast on port 9001)
+flag: YUVA{t1ck1ng_v4ult_c0r3_s3cur1ty_d3fus3d_9842}

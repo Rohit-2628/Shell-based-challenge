@@ -1,0 +1,38 @@
+#cloud-config
+# X08 — Docker-in-Docker Cloud-Init Image Definition
+
+hostname: x08-dind-sandbox
+manage_etc_hosts: true
+
+users:
+  - name: ctf-admin
+    gecos: CTF VM Administrator
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: true
+
+package_update: true
+packages:
+  - docker.io
+  - iptables
+  - curl
+  - util-linux
+  - ebtables
+  - bridge-utils
+
+write_files:
+  - path: /etc/security/limits.d/99-ctf-limits.conf
+    permissions: '0644'
+    content: |
+      * soft nproc 2048
+      * hard nproc 4096
+      * soft nofile 65535
+      * hard nofile 65535
+
+runcmd:
+  - systemctl enable --now docker
+  # Enforce host firewall isolation
+  - /bin/bash /opt/x08/challenge/network/iptables_rules.sh || true
+  # Build and start the CI Runner DinD container
+  - docker build -t x08-docker-in-docker:latest /opt/x08
+  - docker run -d --name x08-docker-in-docker -p 22:22 --privileged x08-docker-in-docker:latest

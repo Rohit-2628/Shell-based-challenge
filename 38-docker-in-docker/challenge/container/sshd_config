@@ -1,0 +1,20 @@
+# OpenSSH Server Configuration for X08 — Docker-in-Docker CI Runner
+Port 22
+ListenAddress 0.0.0.0
+Protocol 2
+
+PermitRootLogin no
+PasswordAuthentication yes
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+UsePAM yes
+
+X11Forwarding no
+PrintMotd yes
+Banner /etc/ssh/banner.txt
+AcceptEnv LANG LC_*
+Subsystem sftp /usr/lib/openssh/sftp-server
+
+# Client keepalive
+ClientAliveInterval 120
+ClientAliveCountMax 3

@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  challenge-02-doombot-firmware:
+    build: .
+    container_name: doombot-firmware
+    ports:
+      - "1338:1338"
+    environment:
+      - FLAG=${FLAG:-YUVA{v1ct0r_v0n_d00m_m4st3r_0f_sc13nc3_4nd_m4g1c_9902}}
+    restart: unless-stopped

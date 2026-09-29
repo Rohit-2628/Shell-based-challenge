@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: d29-cloud-mirror
+  namespace: team-sandbox
+  labels:
+    app.kubernetes.io/name: d29-cloud-mirror
+    challenge: d29
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: d29-cloud-mirror
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: d29-cloud-mirror
+        challenge: d29
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: challenge
+          image: d29-cloud-mirror:latest
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          ports:
+            - name: http-web
+              containerPort: 80
+          env:
+            - name: FLAG
+              valueFrom:
+                secretKeyRef:
+                  name: d29-challenge-flag
+                  key: flag
+                  optional: true
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 768Mi

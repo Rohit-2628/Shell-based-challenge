@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: d28-production-debug
+  labels:
+    app: d28-production-debug
+    challenge-id: d28
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: d28-production-debug
+  template:
+    metadata:
+      labels:
+        app: d28-production-debug
+        challenge-id: d28
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1002
+        runAsGroup: 1002
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: gateway
+          image: d28-production-debug-mode:latest
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 384Mi
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+            - name: FLAG
+              value: "YUVA{pr0duct10n_d3bug_d1sc10sur3_p1v0t_7c2b91ea}"

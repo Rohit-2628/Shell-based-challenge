@@ -1,0 +1,13 @@
+name: "Chrono-Telemetry Stream"
+category: "network"
+difficulty: "Hard"
+description: "Doctor Doom's quantum-temporal displacement engine communicates telemetry with orbital satellites using the custom binary protocol CHRONO-STREAM/3.1 over TCP port 8043. Disarming the core requires issuing command 0x1337 (CHRONO_DRAIN_CORE) with an active 16-byte session token. Reverse engineer the protocol, exploit the zero-copy buffer reflection flaw in the diagnostics engine to leak the secret token, and drain the reactor."
+docker:
+  internal_ports: [8043]
+connection:
+  protocol: "nc"
+  port: 8043
+credentials:
+  username: ""
+  password: ""
+flag: "YUVA{z3r0_c0py_t3l3m3try_r3fl3ct10n_d00m_c0r3_8492}"

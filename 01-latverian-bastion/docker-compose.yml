@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  challenge-01-latverian-bastion:
+    build: .
+    container_name: latverian-bastion
+    ports:
+      - "2222:2222"
+    environment:
+      - FLAG=${FLAG:-YUVA{d00m_d03s_n0t_t0l3r4t3_1ntrud3rs_7491}}
+      - CTF_PASSWORD=${CTF_PASSWORD:-latveria_guard}
+    restart: unless-stopped

@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# X07 — Container Escape Lab Disposable VM Definition
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/ubuntu2204"
+  config.vm.box_version = "4.3.12"
+  config.vm.hostname = "x07-sandbox-host"
+
+  # Network Isolation: Forward SSH port to vulnerable container entrypoint
+  config.vm.network "forwarded_port", guest: 22, host: 2222, auto_correct: false
+  
+  # Strict resource bounds according to masterbook
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "x07-container-escape-sandbox"
+    vb.cpus = 4
+    vb.memory = 4096
+    vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
+    vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
+    vb.customize ["modifyvm", :id, "--paravirtprovider", "kvm"]
+  end
+
+  config.vm.provider "libvirt" do |lv|
+    lv.cpus = 4
+    lv.memory = 4096
+    lv.nested = true
+    lv.driver = "kvm"
+  end
+
+  # Host Provisioning
+  config.vm.provision "shell", path: "provision_host.sh"
+end
