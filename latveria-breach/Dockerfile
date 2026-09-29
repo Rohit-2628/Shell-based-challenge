@@ -6,8 +6,8 @@ RUN apt-get update && \
 
 RUN mkdir /var/run/sshd
 
-# Player account
-RUN useradd -rm -d /home/intruder -s /bin/bash -g root -G sudo -u 1000 intruder
+# Player account (no sudo group to prevent password-based sudo su bypass)
+RUN useradd -rm -d /home/intruder -s /bin/bash -g root -u 1000 intruder
 
 # Sudo rule for find
 RUN echo "# Diagnostic tooling left enabled by a Latverian systems technician. - B." >> /etc/sudoers && \
@@ -46,6 +46,10 @@ RUN chown intruder:root /home/intruder/status /home/intruder/hint && \
     chmod 755 /home/intruder/status /home/intruder/hint
 
 RUN chmod 700 /entrypoint.sh /usr/local/sbin/watchdog.sh /usr/local/bin/broadcaster.sh
+
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config \
+    && sed -i 's/^UsePAM.*/UsePAM yes/' /etc/ssh/sshd_config \
+    && echo "PermitRootLogin no" >> /etc/ssh/sshd_config
 
 EXPOSE 22
 ENTRYPOINT ["/entrypoint.sh"]
