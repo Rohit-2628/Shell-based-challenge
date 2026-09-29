@@ -23,3 +23,7 @@ connection:
 credentials:
   username: ''
   password: ''
+hints:
+  - "Examine the early packets in 'latverian_embassy.pcap'. A syslog event records service startup parameters, including the pre-shared key (PSK)."
+  - "The binary framing consists of a 12-byte header starting with magic 'DOOM' (version 2). To query telemetry, perform a 3-step sequence: HELLO (0x01) to get an 8-byte salt, AUTH (0x03) with HMAC-SHA256(PSK, salt), and QUERY (0x05) with 2-byte command 0x1337."
+

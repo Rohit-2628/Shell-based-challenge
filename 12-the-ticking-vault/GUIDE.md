@@ -1,24 +1,21 @@
 # 12-the-ticking-vault - Testing & Solve Guide
 
 ## 1. Challenge setup
-- **Start**: `cd ctf-platform/challenges/12-the-ticking-vault && docker compose up -d`
-- **Ports**: 2224 (SSH), 9001 (TCP Broadcast)
-- **Protocol**: SSH / TCP
-- **Credentials**: Username: `player` | Password: (Decrypted from port 9001)
+- **Start**: `cd ctf-platform/challenges/12-the-ticking-vault && docker build -t 12-the-ticking-vault . && docker run -d --name the-ticking-vault -p 2224:22 12-the-ticking-vault`
+- **Ports**: 2224 (SSH)
+- **Protocol**: SSH
+- **Credentials**: Username: `player` | Password: (Decrypted from SSH pre-login broadcast banner)
 
 ## 2. How to access it
 ```bash
-# Connect to broadcaster
-nc 127.0.0.1 9001
-
-# SSH to player
+# Connect to SSH (pre-login banner displays encrypted vault broadcast)
 ssh player@127.0.0.1 -p 2224
 ```
 
 ## 3. Intended solve path
-1. Connect to TCP port 9001: receive `ENCRYPTED_VAULT_CODE:<HEX_DATA>`.
-2. Decrypt AES-256-CBC ciphertext using key `C7F_3ncrypt10n_K3y_N3v3r_G3u3s3d` (first 16 bytes = IV).
-3. SSH to `player@127.0.0.1 -p 2224` with the decrypted password.
+1. Connect to SSH port 2224: the pre-login banner displays `ENCRYPTED_VAULT_CODE:<HEX_DATA>`.
+2. Decrypt AES-256-CBC ciphertext using key `C7F_3ncrypt10n_K3y_N3v3r_G3u3s3d` (from handout `broadcaster.py`, first 16 bytes = IV).
+3. Authenticate to `player@127.0.0.1 -p 2224` with the decrypted password.
 4. Exploit the misconfigured cron job in `/etc/cron.d/vault-cron` running `/opt/vault/rotate_logs.sh` (world-writable) as root.
 5. Retrieve flag from `/root/flag.txt`.
 

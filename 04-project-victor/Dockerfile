@@ -10,7 +10,8 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh /app/victor_advisor.py
 
 USER ctf
-
-EXPOSE 5000 1339
+ENV HTTP_PORT=5004
+EXPOSE 5004
 
 ENTRYPOINT ["/entrypoint.sh"]
+

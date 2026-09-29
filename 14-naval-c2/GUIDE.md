@@ -1,7 +1,7 @@
 # 14-naval-c2 - Testing & Solve Guide
 
 ## 1. Challenge setup
-- **Start**: `cd ctf-platform/challenges/14-naval-c2 && docker compose up -d`
+- **Start**: `cd ctf-platform/challenges/14-naval-c2 && docker build -t 14-naval-c2 . && docker run -d --privileged --name naval-c2-node -p 2226:22 14-naval-c2`
 - **Ports**: 2226
 - **Protocol**: SSH
 - **Credentials**: Username: `player` | Password: `ctf_password`

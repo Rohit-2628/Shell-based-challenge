@@ -25,3 +25,7 @@ connection:
 credentials:
   username: ''
   password: ''
+hints:
+  - "The classification model is a linear layer (logits = x @ W + b) followed by softmax. Because you have the full white-box weights (W), you can directly compute the input gradients."
+  - "Apply the Targeted Fast Gradient Sign Method (FGSM). To maximize the probability of class 2 ('PEACEFUL_BALLOON') relative to competitor classes, adjust each pixel by eps = 12/255 in the direction of W[:, 2] - W[:, competitor], then clip pixel values to [0, 1]."
+

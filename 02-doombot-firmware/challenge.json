@@ -6,5 +6,9 @@
   "description": "We recovered a logic chip from a downed Doombot v4 patrol droid. We extracted its activation verification binary 'doombot_auth'. The binary validates authentication nonces using a proprietary cryptographic transformation. Analyze the binary in Ghidra/IDA, understand the transformation algorithm, bypass its anti-analysis checks, and interact with the live Doombot C2 node to extract the dynamic deployment directive.",
   "flag": "YUVA{v1ct0r_v0n_d00m_m4st3r_0f_sc13nc3_4nd_m4g1c_9902}",
   "tags": ["reverse-engineering", "anti-debugging", "keygen", "elf-x86_64", "dr-doom"],
-  "connection_info": "nc <host> 1338"
+  "connection_info": "nc <host> 1338",
+  "hints": [
+    "The binary 'doombot_auth' contains anti-debugging checks that inspect TracerPid. Static disassembly or decompilation in Ghidra or IDA avoids triggering these anti-analysis checks.",
+    "Look for 'compute_doombot_signature'. It applies a 3-stage transformation: keyed byte expansion with 'LATVERIA_VICTOR!', a permutation map, and a rolling XOR/addition feedback loop."
+  ]
 }

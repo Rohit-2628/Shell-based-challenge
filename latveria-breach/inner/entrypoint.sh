@@ -1,6 +1,6 @@
 #!/bin/bash
-CURRENT_FLAG=${FLAG:-"YUVA{d00ms_wr4th_4v01d3d}"}
-CURRENT_PASS=${SSH_PASS:-"survive"}
+CURRENT_FLAG=${FLAG:-"YUVA{d00ms_dyn4m1c_fl4g_1337}"}
+CURRENT_PASS=${SSH_PASS:-"doom_is_master"}
 
 echo "intruder:$CURRENT_PASS" | chpasswd
 

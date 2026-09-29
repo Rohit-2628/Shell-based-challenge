@@ -20,3 +20,7 @@ connection:
 credentials:
   username: border-guard
   password: latveria_guard
+hints:
+  - "Even in heavily restricted shell environments, standard text editors (such as ed) support running external commands using shell escapes (e.g. ! command)."
+  - "Check for custom SUID binaries on the system. When a privileged binary invokes tar using wildcards (*) in a user-writable directory, command-line flags like --checkpoint and --checkpoint-action can be injected via filenames."
+

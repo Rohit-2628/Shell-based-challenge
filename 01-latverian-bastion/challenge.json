@@ -6,5 +6,9 @@
   "description": "You have intercepted an unprivileged terminal session on a Latverian border telemetry outpost (bastion-01.latveria.gov). The operator 'border-guard' is trapped in Doom's restricted shell environment. The outpost runs an internal maintenance daemon to sync orbital telemetry. Escape the restricted shell, investigate the node, escalate your privileges, and retrieve the Latverian border master key.",
   "flag": "YUVA{d00m_d03s_n0t_t0l3r4t3_1ntrud3rs_7491}",
   "tags": ["rbash-escape", "tar-wildcard-injection", "privilege-escalation", "dr-doom"],
-  "connection_info": "ssh border-guard@<host> -p 2222 (password: latveria_guard)"
+  "connection_info": "ssh border-guard@<host> -p 2222 (password: latveria_guard)",
+  "hints": [
+    "Even in heavily restricted shell environments, standard text editors (such as ed) support running external commands using shell escapes (e.g. ! command).",
+    "Check for custom SUID binaries on the system. When a privileged binary invokes tar using wildcards (*) in a user-writable directory, command-line flags like --checkpoint and --checkpoint-action can be injected via filenames."
+  ]
 }

@@ -1,10 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ -z "${FLAG:-}" ]; then
-    echo "FATAL: \$FLAG not set at container start." >&2
-    exit 1
-fi
+FLAG="${FLAG:-YUVA{d00m_m4st3r_c0nt41nm3nt_s3qu3nc3_d1s4rm3d_2026}}"
 
 # 1. Generate a unique 16-byte Master Key for this instance.
 INSTANCE_KEY=$(head -c 16 /dev/urandom | xxd -p)

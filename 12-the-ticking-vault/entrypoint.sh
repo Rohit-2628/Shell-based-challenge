@@ -2,7 +2,7 @@
 set -e
 
 # Deterministic static fallback flag
-STATIC_FLAG="DOOM{t1ck1ng_v4ult_c0r3_s3cur1ty_d3fus3d_9842}"
+STATIC_FLAG="YUVA{t1ck1ng_v4ult_c0r3_s3cur1ty_d3fus3d_9842}"
 
 # Determine and validate candidate flag
 CANDIDATE_FLAG="${FLAG:-${DYNAMIC_FLAG:-}}"
@@ -10,7 +10,7 @@ CANDIDATE_FLAG="${FLAG:-${DYNAMIC_FLAG:-}}"
 # Strip whitespace / newlines
 CANDIDATE_FLAG="$(echo -n "$CANDIDATE_FLAG" | tr -d '\r\n' | awk '{$1=$1};1')"
 
-FLAG_REGEX='^DOOM\{[A-Za-z0-9_@!#%&*-]+\}$'
+FLAG_REGEX='^(YUVA|DOOM)\{[A-Za-z0-9_@!#%&*-]+\}$'
 
 # Flag validation: non-empty, must match standard DOOM{...} pattern
 if [[ -n "$CANDIDATE_FLAG" && "$CANDIDATE_FLAG" =~ $FLAG_REGEX ]]; then

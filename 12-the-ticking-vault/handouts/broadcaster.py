@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 """
 broadcaster.py — broadcasts an AES-256-CBC encrypted vault password
-over TCP port 9000. The player must intercept + decrypt this stream
-to get the current password.
+in the SSH pre-login banner. The player must decrypt this code
+to obtain the current password.
 """
 
 import os
@@ -15,12 +14,9 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
 
-HOST = "0.0.0.0"
-PORT = 9000
-BROADCAST_INTERVAL = 30
 PASS_FILE = "/tmp/current_vault_pass"
 KEY = b"C7F_3ncrypt10n_K3y_N3v3r_G3u3s3d"  # 32 bytes AES-256 key
-VAULT_PASSWORD = "vaultpass2026"
+# VAULT_PASSWORD rotates and is encrypted before being broadcast
 
 clients = []
 clients_lock = threading.Lock()

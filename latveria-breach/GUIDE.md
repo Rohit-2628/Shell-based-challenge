@@ -1,7 +1,7 @@
 # 13-latveria-breach - Testing & Solve Guide
 
 ## 1. Challenge setup
-- **Start**: `cd ctf-platform/challenges/13-latveria-breach && docker compose up -d`
+- **Start**: `cd ctf-platform/challenges/13-latveria-breach && docker build -t 13-latveria-breach . && docker run -d --name latveria-breach -p 2229:22 13-latveria-breach`
 - **Ports**: 2229
 - **Protocol**: SSH
 - **Credentials**: Username: `intruder` | Password: `doom_is_master`

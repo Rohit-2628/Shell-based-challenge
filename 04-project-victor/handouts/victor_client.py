@@ -7,7 +7,8 @@ Usage:
 import sys
 import requests
 
-TARGET_URL = sys.argv[2] if len(sys.argv) > 2 else "http://127.0.0.1:5000/api/chat"
+import os
+TARGET_URL = sys.argv[2] if len(sys.argv) > 2 else os.environ.get("TARGET_URL", "http://127.0.0.1:5004/api/chat")
 
 def query_victor(prompt: str, url: str = TARGET_URL):
     try:

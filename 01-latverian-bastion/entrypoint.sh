@@ -18,6 +18,8 @@ echo "[$(date)] Sensor status nominal. No Richards intrusions detected." > /var/
 echo "[$(date)] Defense perimeter active." > /var/log/latveria/telemetry/perimeter.log
 chown -R root:guard /var/log/latveria/telemetry
 chmod 775 /var/log/latveria/telemetry
+chown root:root /usr/local/bin/doom-monitor
+chmod 4755 /usr/local/bin/doom-monitor
 
 echo "[+] Latverian Bastion initialized. Starting SSH daemon on port 2222..."
 exec /usr/sbin/sshd -D -e

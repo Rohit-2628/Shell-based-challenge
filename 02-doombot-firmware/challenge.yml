@@ -21,3 +21,7 @@ connection:
 credentials:
   username: ''
   password: ''
+hints:
+  - "The binary 'doombot_auth' contains anti-debugging checks that inspect TracerPid. Static disassembly or decompilation in Ghidra or IDA avoids triggering these anti-analysis checks."
+  - "Look for 'compute_doombot_signature'. It applies a 3-stage transformation: keyed byte expansion with 'LATVERIA_VICTOR!', a permutation map, and a rolling XOR/addition feedback loop."
+

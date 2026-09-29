@@ -14,22 +14,22 @@ RUN mkdir -p /etc/docker && echo '{"storage-driver": "vfs"}' > /etc/docker/daemo
 # Setup SSH securely and robustly
 RUN mkdir -p /run/sshd
 
-# CREATE THE USER EXACTLY ONCE
-RUN useradd -rm -d /home/player -s /bin/bash -g root -G sudo -u 1000 player
+# CREATE THE USER EXACTLY ONCE (do not add to sudo group to prevent arbitrary command execution)
+RUN useradd -rm -d /home/player -s /bin/bash -g root -u 1000 player
 RUN echo 'player:ctf_password' | chpasswd
 
 # Generate dynamic host keys for production deployment
 RUN ssh-keygen -A
 
-# Grant passwordless sudo to the player
-RUN echo 'player ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/player
+# Grant restricted passwordless sudo for incident response and override
+RUN echo 'player ALL=(root) NOPASSWD: /opt/c2/override.sh, /usr/bin/pkill, /bin/kill' > /etc/sudoers.d/player
 
 # Explicitly allow password authentication
 RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
 
-# Copy player challenge files
-COPY player_files/ /home/player/player_files/
-RUN cp -r /home/player/player_files/* /home/player/ 2>/dev/null || true
+# Copy player challenge files directly to home directory and symlink player_files
+COPY player_files/ /home/player/
+RUN ln -s /home/player /home/player/player_files 2>/dev/null || true
 RUN chown -R player:root /home/player/
 
 # Copy the offline web-c2 base image and override script

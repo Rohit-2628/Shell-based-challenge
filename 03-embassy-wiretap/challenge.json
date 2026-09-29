@@ -6,5 +6,9 @@
   "description": "We tapped the diplomatic communication link at the Latverian Embassy in Bern. We captured a packet trace 'latverian_embassy.pcap' showing an authenticated telemetry query over a proprietary binary protocol ('DOOM-NET/2.0') on port 8042. Analyze the packet capture in Wireshark to reverse the protocol framing, handshake sequence, and authentication mechanism. Then interact with the live relay service to authenticate and retrieve the classified diplomatic transmission.",
   "flag": "YUVA{h4ck1ng_th3_l4tv3r14n_d1pl0m4t1c_w1r3_5183}",
   "tags": ["networking", "pcap", "wireshark", "custom-protocol", "replay-attack", "dr-doom"],
-  "connection_info": "nc <host> 8042"
+  "connection_info": "nc <host> 8042",
+  "hints": [
+    "Examine the early packets in 'latverian_embassy.pcap'. A syslog event records service startup parameters, including the pre-shared key (PSK).",
+    "The binary framing consists of a 12-byte header starting with magic 'DOOM' (version 2). To query telemetry, perform a 3-step sequence: HELLO (0x01) to get an 8-byte salt, AUTH (0x03) with HMAC-SHA256(PSK, salt), and QUERY (0x05) with 2-byte command 0x1337."
+  ]
 }

@@ -6,5 +6,9 @@
   "description": "Latveria's border defense runs an automated visual surveillance network ('Aegis-Vision') on drone interceptors to shoot down intruder aircraft. An interceptor photo of your stealth glider ('infiltrator.png') is currently classified as 'AVENGER_INFILTRATOR' with 100% confidence. You have obtained a copy of the model weights ('aegis_weights.json'). Perform a white-box targeted adversarial evasion attack (FGSM/PGD) to fool the classifier into predicting 'PEACEFUL_BALLOON' with >= 90% confidence, while keeping maximum perturbation within Linf <= 12/255. Submit your perturbed image to the border verification API to obtain clearance.",
   "flag": "YUVA{4dv3rs4r14l_p3rturb4t10n_bl1nds_d00ms_s3ns0rs_8271}",
   "tags": ["ai-security", "adversarial-ml", "fgsm", "pgd", "evasion-attack", "dr-doom"],
-  "connection_info": "http://<host>:8000"
+  "connection_info": "http://<host>:8000",
+  "hints": [
+    "The classification model is a linear layer (logits = x @ W + b) followed by softmax. Because you have the full white-box weights (W), you can directly compute the input gradients.",
+    "Apply the Targeted Fast Gradient Sign Method (FGSM). To maximize the probability of class 2 ('PEACEFUL_BALLOON') relative to competitor classes, adjust each pixel by eps = 12/255 in the direction of W[:, 2] - W[:, competitor], then clip pixel values to [0, 1]."
+  ]
 }

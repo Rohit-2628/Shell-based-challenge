@@ -2,7 +2,7 @@ version: '3'
 services:
   web-c2:
     image: python:3.9-alpine
-    command: sh -c "pip install flask docker && python /app/app.py"
+    command: python /app/app.py
     volumes:
       - ./app.py:/app/app.py
       # THE BUG: Attackers changed the internal mount path, breaking the dashboard

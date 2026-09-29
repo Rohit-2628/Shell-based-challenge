@@ -1,7 +1,7 @@
 # 15-latveria-ctf - Testing & Solve Guide
 
 ## 1. Challenge setup
-- **Start**: `cd ctf-platform/challenges/15-latveria-ctf && docker compose up -d`
+- **Start**: `cd ctf-platform/challenges/15-latveria-ctf && docker build -t 15-latveria-ctf . && docker run -d --name latveria-ctf-containment -p 2225:22 15-latveria-ctf`
 - **Ports**: 2225
 - **Protocol**: SSH
 - **Credentials**: Username: `latverian_conscript` | Password: `doom_rules_all`

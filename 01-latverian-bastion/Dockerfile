@@ -47,8 +47,8 @@ RUN chown -R root:root /home/border-guard && \
 COPY src/doom-monitor.c /tmp/doom-monitor.c
 RUN gcc -O2 /tmp/doom-monitor.c -o /usr/local/bin/doom-monitor && \
     rm /tmp/doom-monitor.c && \
-    chmod 4755 /usr/local/bin/doom-monitor && \
-    chown root:root /usr/local/bin/doom-monitor
+    chown root:root /usr/local/bin/doom-monitor && \
+    chmod 4755 /usr/local/bin/doom-monitor
 
 # Configure OpenSSH
 RUN echo "Port 2222" >> /etc/ssh/sshd_config && \

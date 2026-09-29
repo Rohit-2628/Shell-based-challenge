@@ -20,7 +20,7 @@ if [ -f /opt/c2/web-c2.tar ]; then
 fi
 
 # 2. Start the broken Web C2 dashboard
-cd /home/player/player_files 2>/dev/null || cd /home/player
+cd /home/player
 docker-compose up -d > /dev/null 2>&1 || true
 
 # 3. Start the APT Backdoor Daemon on port 2375

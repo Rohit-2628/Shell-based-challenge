@@ -59,5 +59,5 @@ RUN chmod 755 /entrypoint.sh
 # /proc from inside an unprivileged image build). entrypoint.sh attempts it
 # defensively; document this requirement clearly for operators too.
 
-EXPOSE 22 1337
+EXPOSE 22
 ENTRYPOINT ["/entrypoint.sh"]
