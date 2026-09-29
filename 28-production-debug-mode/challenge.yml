@@ -2,9 +2,10 @@ name: 28-production-debug-mode
 category: web
 difficulty: Hard
 description: |
-  Production Debug Mode. Discover an active interactive debugger (Werkzeug/Flask debug console) running on port 8088, extract machine MAC address and machine-id from /proc/sys/kernel/random/boot_id, compute the PIN, spawn a console shell, and extract the flag.
+  Latveria Defense Nexus Production Gateway API. Analyze public endpoints on port 8088, trigger safe unhandled error conditions to elicit verbose debug disclosures, extract internal microservice topology and administrative debug tokens, and pivot via /api/v1/gateway/dispatch to the internal executive core to retrieve the flag.
 docker:
   internal_ports: [80]
+connection_info: 'http://<host>:8088/'
 connection:
   protocol: http
   port: 8088
@@ -12,3 +13,12 @@ credentials:
   username: anonymous
   password: 
 flag: YUVA{pr0duct10n_d3bug_d1sc10sur3_p1v0t_7c2b91ea}
+tags:
+  - debug-disclosure
+  - stack-trace-leakage
+  - internal-service-pivot
+  - telemetry-gateway
+hints:
+  - "Interact with the public API endpoints (/api/v1/status, /api/v1/telemetry/nodes, /api/v1/telemetry/query). Test how the server responds when unexpected data types or malformed payloads are sent."
+  - "Sending an invalid type or malformed query (such as integer sector or ?debug=1) triggers an unhandled exception in the production gateway. Inspect the detailed stack trace and runtime_environment dictionary returned in the HTTP 500 debug report."
+  - "The disclosed configuration reveals DEBUG_OVERRIDE_KEY ('latveria_dbg_admin_8b91a742cd3f'), target route '/api/v2/nexus/executive/control', and action 'query_executive_core'. Dispatch an authorized POST request to '/api/v1/gateway/dispatch' with header 'X-Latveria-Debug-Token' to query the internal executive core and retrieve the flag."

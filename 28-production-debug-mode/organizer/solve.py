@@ -125,7 +125,7 @@ def solve(host="127.0.0.1", port=8080):
             flag = result.get("flag")
             if not flag:
                 # Check for flag regex in entire body
-                match = re.search(r"(DOOM\{[^\}]+\}|FLAG\{[^\}]+\})", resp_body)
+                match = re.search(r"(YUVA\{[^\}]+\}|DOOM\{[^\}]+\}|FLAG\{[^\}]+\})", resp_body)
                 if match:
                     flag = match.group(1)
 
@@ -149,7 +149,7 @@ def solve(host="127.0.0.1", port=8080):
 def main():
     parser = argparse.ArgumentParser(description="D28 — Production Debug Mode Solver")
     parser.add_argument("--host", default="127.0.0.1", help="Target host (default: 127.0.0.1)")
-    parser.add_argument("--port", type=int, default=8080, help="Target port (default: 8080 for compose, 80 for k8s)")
+    parser.add_argument("--port", type=int, default=8088, help="Target port (default: 8088 for compose, 80 for k8s)")
     args = parser.parse_args()
 
     solve(args.host, args.port)

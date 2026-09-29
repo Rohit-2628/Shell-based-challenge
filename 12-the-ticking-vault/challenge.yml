@@ -1,11 +1,7 @@
 name: 12-the-ticking-vault
 category: crypto
 difficulty: Medium
-description: 'Doctor Doom''s subterranean ticking vault broadcasts AES-256 encrypted rotating
-  passwords over TCP. Intercept and decrypt the broadcast, authenticate via SSH,
-  and escalate privileges before the countdown expires.
-
-  ---'
+description: "Doctor Doom's subterranean vault pre-login broadcast subsystem encrypts dynamic authentication tokens directly into the station's SSH banner. Once inside, an automated containment countdown is actively ticking down in temporary storage (/tmp). Monitor the timer, investigate recurring administrative maintenance, and escalate your privileges to defuse the vault and recover the flag before time runs out."
 docker:
   internal_ports:
   - 2224
@@ -16,3 +12,8 @@ credentials:
   username: player
   password: (encrypted in SSH pre-login broadcast banner)
 flag: YUVA{t1ck1ng_v4ult_c0r3_s3cur1ty_d3fus3d_9842}
+hints:
+  - "The vault communicates prior to authentication. Look at the pre-login banner emitted over SSH; decrypting that hex payload with the key in broadcaster.py will grant you terminal access."
+  - "Once inside, check /tmp for active telemetry files to monitor how many seconds you have before self-destruct occurs. Temporary storage is also the ideal staging ground for your exfiltration output."
+  - "System daemons in /etc/cron.d/ execute maintenance routines as root. Inspect the permissions of target scripts to pivot into administrative access."
+

@@ -4,7 +4,8 @@ set -euo pipefail
 echo "[*] Initializing D27 — Private Container Registry Challenge..."
 
 # 1. Setup Flag securely
-FLAG_VALUE="${FLAG:-YUVA{pr1v4t3_r3g1stry_l4y3r_3xf1ltr4t10n_9901}}"
+DEFAULT_FLAG="YUVA{pr1v4t3_r3g1stry_l4y3r_3xf1ltr4t10n_9901}"
+FLAG_VALUE="${FLAG:-$DEFAULT_FLAG}"
 mkdir -p /opt/vault
 echo "${FLAG_VALUE}" > /opt/vault/flag.txt
 chown -R vault:vault /opt/vault

@@ -183,10 +183,10 @@ print(resp.get('flag', ''))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="D27 Private Container Registry Solver")
-    parser.add_argument("--registry-url", default="http://127.0.0.1:8080", help="Registry URL (via port 80/8080)")
-    parser.add_argument("--vault-url", default="http://127.0.0.1:8080", help="Vault URL")
-    parser.add_argument("--container", default="d27-test-runner", help="Docker container name for local test")
-    parser.add_argument("--mode", choices=["http", "container"], default="container", help="Execution mode")
+    parser.add_argument("--registry-url", default="http://127.0.0.1:8081", help="Registry URL (via port 80/8081)")
+    parser.add_argument("--vault-url", default="http://127.0.0.1:8081", help="Vault URL")
+    parser.add_argument("--container", default="27-private-container-registry", help="Docker container name for local test")
+    parser.add_argument("--mode", choices=["http", "container"], default="http", help="Execution mode")
     args = parser.parse_args()
 
     if args.mode == "container":

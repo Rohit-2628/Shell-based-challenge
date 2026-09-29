@@ -5,6 +5,7 @@ description: |
   Cloud Mirror (SSRF & Cloud Metadata). Exploit SSRF in the telemetry mirror gateway on port 8089 to pivot to mock cloud metadata (169.254.169.254), acquire IAM instance credentials, query the private object storage bucket, and extract the orbital defense key.
 docker:
   internal_ports: [80]
+connection_info: 'http://<host>:8089/'
 connection:
   protocol: http
   port: 8089
@@ -12,3 +13,12 @@ credentials:
   username: anonymous
   password: 
 flag: YUVA{cl0ud_m1rr0r_ssrf_m3t4d4t4_0bj_st0r3_7a9e2f}
+tags:
+  - ssrf
+  - cloud-metadata
+  - iam-credentials
+  - object-storage
+hints:
+  - "The application accepts arbitrary URLs to fetch and mirror in '/api/v1/fetch'. Test whether internal addresses or cloud metadata endpoints like 'http://169.254.169.254' can be queried."
+  - "Query 'http://169.254.169.254/latest/meta-data/iam/security-credentials/LatveriaCloudMirrorRole' via the SSRF endpoint to recover temporary IAM session credentials ('Token') and the internal object storage endpoint."
+  - "Use the recovered session token in header 'Authorization: Bearer <Token>' with the SSRF fetcher to access 'http://storage.internal/api/v1/storage'. List buckets, inspect the private 'classified-orbital-mirror' bucket, and download 'classified_mirror_master_key.dat' to recover the flag."

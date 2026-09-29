@@ -2,7 +2,8 @@
 set -e
 
 # Default synthetic flag if not injected dynamically
-CHALLENGE_FLAG="${FLAG:-YUVA{k8s_rb4c_s3rv1c3_4cc0unt_3x3c_p1v0t_9d82e1}}"
+DEFAULT_FLAG="YUVA{k8s_rb4c_s3rv1c3_4cc0unt_3x3c_p1v0t_9d82e1}"
+CHALLENGE_FLAG="${FLAG:-$DEFAULT_FLAG}"
 
 echo "[+] Initializing D30 — Internal Kubernetes Challenge Environment..."
 

@@ -20,20 +20,17 @@ An unprivileged security auditor workstation has been provisioned for your team,
 
 ### Access Information
 
-* **HTTP Registry Gateway:** `http://<HOST>:<PORT_HTTP>/` (Docker / OCI Registry v2 API & Web Portal)
-* **SSH Auditor Workstation:**
-  * **Command:** `ssh developer@<HOST> -p <PORT_SSH>`
-  * **Username:** `developer`
-  * **Password:** `developer`
+* **HTTP Gateway:** `http://<HOST>:8081/` (Docker / OCI Registry v2 API, Web Portal & Vault Gateway)
+  *(If testing locally via Docker Compose, access `http://127.0.0.1:8081/`)*
 
 ---
 
 ### Challenge Objective
 
-1. Enumerate the private container registry repositories and tags.
+1. Enumerate the private container registry repositories and tags via `http://<HOST>:8081/v2/`.
 2. Investigate image version histories, manifests, and historical layer blobs.
 3. Locate and extract the historical developer configuration secret that was purged from current builds.
-4. Authenticate against the internal Orbital Vault service (`http://127.0.0.1:8080/api/v1/vault/override`) using the recovered credentials.
+4. Authenticate against the Orbital Vault service endpoint (`http://<HOST>:8081/api/v1/vault/override`) using the recovered credentials.
 5. Disengage the defense grid lock and retrieve the flag.
 
 ---

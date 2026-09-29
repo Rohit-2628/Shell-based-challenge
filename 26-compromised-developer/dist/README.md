@@ -27,7 +27,7 @@ ssh developer@<HOST> -p <PORT>
 * **Username:** `developer`
 * **Password:** `developer`
 
-*(If running locally via Docker Compose, the port is `2222`: `ssh developer@127.0.0.1 -p 2222`)*
+*(If running locally via Docker Compose, the port is `2227`: `ssh developer@127.0.0.1 -p 2227`)*
 
 ---
 

@@ -5,6 +5,7 @@ description: |
   Internal Kubernetes. Exploit command injection on the cluster diagnostic probe API on port 8090, pivot to the in-cluster ServiceAccount token, exploit overbroad RBAC permissions (pods/exec in orbital-defense), and extract the sovereign defense grid flag.
 docker:
   internal_ports: [80]
+connection_info: 'http://<host>:8090/'
 connection:
   protocol: http
   port: 8090
@@ -12,3 +13,13 @@ credentials:
   username: anonymous
   password: 
 flag: YUVA{k8s_rb4c_s3rv1c3_4cc0unt_3x3c_p1v0t_9d82e1}
+tags:
+  - kubernetes
+  - rbac-misconfiguration
+  - service-account
+  - command-injection
+  - pod-exec
+hints:
+  - "Inspect the fleet sentinel diagnostic probe endpoint at 'POST /api/v1/diagnostics/probe'. Test if probe targets allow shell command chaining (e.g. '127.0.0.1; <command>')."
+  - "Use command injection to locate in-cluster credentials mounted under '/var/run/secrets/kubernetes.io/serviceaccount/'. Extract the bearer token and query the internal Kubernetes API ('https://127.0.0.1:6443/apis/authorization.k8s.io/v1/selfsubjectrulesreviews') to evaluate RBAC permissions across namespaces."
+  - "The service account holds overbroad 'create' permission on 'pods/exec' in the 'orbital-defense' namespace. Enumerate pods via 'https://127.0.0.1:6443/api/v1/namespaces/orbital-defense/pods' and trigger pod exec on 'doombot-defense-controller-0' targeting '/var/run/secrets/latveria.io/defense_flag.txt' to retrieve the flag."

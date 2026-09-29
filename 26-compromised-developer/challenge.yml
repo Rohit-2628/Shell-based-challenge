@@ -5,6 +5,7 @@ description: |
   Compromised Developer Workstation. Connect over SSH, audit local git commit histories in ~/projects/latveria-telemetry-dispatch/, extract purged CI signing keys, reconstruct the HMAC-SHA256 signature protocol, and dispatch authorized telemetry payload to unlock the production flag.
 docker:
   internal_ports: [22]
+connection_info: 'ssh developer@<host> -p 2227 (password: developer)'
 connection:
   protocol: ssh
   port: 2227
@@ -12,3 +13,13 @@ credentials:
   username: developer
   password: developer
 flag: YUVA{c0mpr0m1s3d_d3v_h1st0ry_hm4c_auth_8821}
+tags:
+  - git-history
+  - secret-leak
+  - hmac-sha256
+  - ci-cd-pipeline
+  - privilege-pivot
+hints:
+  - "Examine the local Git repository in ~/projects/latveria-telemetry-dispatch/. Even if a sensitive file is deleted from HEAD, Git preserves historical commits."
+  - "Use 'git log -p -S DOOM_CI_SIGNING_KEY' or inspect commit history to locate the purged ci/release_keys.env file containing the CI signing key and deployment token."
+  - "Review ci/pipeline.py to understand how HMAC-SHA256 signatures are generated. Run 'python3 ci/pipeline.py' with the recovered --key and --token flags against http://127.0.0.1:8080/api/v1/telemetry/deploy to retrieve the production flag."

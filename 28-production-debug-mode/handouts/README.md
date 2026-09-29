@@ -24,7 +24,7 @@ Access the public production web service on TCP/80:
 http://<TARGET_HOST>:<PORT>/
 ```
 
-*(If testing locally via Docker Compose, access `http://127.0.0.1:8080/`)*
+*(If testing locally via Docker Compose, access `http://127.0.0.1:8088/`)*
 
 ---
 

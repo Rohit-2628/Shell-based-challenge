@@ -4,7 +4,8 @@ set -euo pipefail
 echo "[*] Initializing D28 — Production Debug Mode Challenge..."
 
 # 1. Setup Flag securely
-FLAG_VALUE="${FLAG:-YUVA{pr0duct10n_d3bug_d1sc10sur3_p1v0t_7c2b91ea}}"
+DEFAULT_FLAG="YUVA{pr0duct10n_d3bug_d1sc10sur3_p1v0t_7c2b91ea}"
+FLAG_VALUE="${FLAG:-$DEFAULT_FLAG}"
 mkdir -p /opt/vault
 echo "${FLAG_VALUE}" > /opt/vault/flag.txt
 chown -R vault:vault /opt/vault

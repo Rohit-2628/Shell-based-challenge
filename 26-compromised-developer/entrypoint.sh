@@ -4,7 +4,8 @@ set -euo pipefail
 echo "[*] Initializing D26 - Compromised Developer Environment..."
 
 # 1. Setup Flag
-FLAG_VALUE="${FLAG:-DOOM{c0mpr0m1s3d_d3v_t0_pr0d_p1p3l1n3_8a39f1c7}}"
+DEFAULT_FLAG="YUVA{c0mpr0m1s3d_d3v_h1st0ry_hm4c_auth_8821}"
+FLAG_VALUE="${FLAG:-$DEFAULT_FLAG}"
 mkdir -p /opt/production
 echo "${FLAG_VALUE}" > /opt/production/flag.txt
 chown -R prod:prod /opt/production

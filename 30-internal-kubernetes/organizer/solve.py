@@ -135,7 +135,7 @@ def solve(base_url):
     print("="*70)
 
     import re
-    flag_match = re.search(r"(DOOM\{[^\}]+\}|FLAG\{[^\}]+\})", flag_out)
+    flag_match = re.search(r"(YUVA\{[^\}]+\}|DOOM\{[^\}]+\}|FLAG\{[^\}]+\})", flag_out)
     if flag_match:
         found_flag = flag_match.group(1)
         print(f"\n[SUCCESS] Extracted Flag: {found_flag}\n")
@@ -146,7 +146,7 @@ def solve(base_url):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="D30 — Internal Kubernetes Exploit Solver")
-    parser.add_argument("--url", default="http://127.0.0.1:8080", help="Target base URL (default: http://127.0.0.1:8080)")
+    parser.add_argument("--url", default="http://127.0.0.1:8090", help="Target base URL (default: http://127.0.0.1:8090)")
     parser.add_argument("--host", default=None, help="Target host")
     parser.add_argument("--port", default=None, help="Target port")
 

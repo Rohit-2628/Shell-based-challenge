@@ -4,7 +4,8 @@ set -euo pipefail
 echo "[*] Initializing D29 — Cloud Mirror Challenge..."
 
 # 1. Setup Flag securely
-FLAG_VALUE="${FLAG:-YUVA{cl0ud_m1rr0r_ssrf_m3t4d4t4_0bj_st0r3_7a9e2f}}"
+DEFAULT_FLAG="YUVA{cl0ud_m1rr0r_ssrf_m3t4d4t4_0bj_st0r3_7a9e2f}"
+FLAG_VALUE="${FLAG:-$DEFAULT_FLAG}"
 mkdir -p /opt/storage
 echo "${FLAG_VALUE}" > /opt/storage/flag.txt
 chown -R storage:storage /opt/storage
