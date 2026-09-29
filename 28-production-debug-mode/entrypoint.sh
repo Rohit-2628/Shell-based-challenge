@@ -5,7 +5,7 @@ echo "[*] Initializing D28 — Production Debug Mode Challenge..."
 
 # 1. Setup Flag securely
 DEFAULT_FLAG="YUVA{pr0duct10n_d3bug_d1sc10sur3_p1v0t_7c2b91ea}"
-FLAG_VALUE="${FLAG:-$DEFAULT_FLAG}"
+FLAG_VALUE="${CHALLENGE_FLAG:-${FLAG:-${DYNAMIC_FLAG:-$DEFAULT_FLAG}}}"
 mkdir -p /opt/vault
 echo "${FLAG_VALUE}" > /opt/vault/flag.txt
 chown -R vault:vault /opt/vault
@@ -13,10 +13,10 @@ chmod 700 /opt/vault
 chmod 400 /opt/vault/flag.txt
 
 # Unset and clear FLAG variable from environment to prevent env leaks
-unset FLAG || true
-export -n FLAG || true
-echo "unset FLAG" >> /etc/profile
-echo "unset FLAG" >> /etc/bash.bashrc
+unset FLAG CHALLENGE_FLAG DYNAMIC_FLAG || true
+export -n FLAG CHALLENGE_FLAG DYNAMIC_FLAG || true
+echo "unset FLAG CHALLENGE_FLAG DYNAMIC_FLAG" >> /etc/profile
+echo "unset FLAG CHALLENGE_FLAG DYNAMIC_FLAG" >> /etc/bash.bashrc
 
 # 2. Start Internal Executive Core Daemon (user: vault) on 127.0.0.1:8081
 echo "[*] Starting Internal Executive Core Daemon (user: vault) on 127.0.0.1:8081..."

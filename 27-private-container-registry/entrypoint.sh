@@ -5,7 +5,7 @@ echo "[*] Initializing D27 — Private Container Registry Challenge..."
 
 # 1. Setup Flag securely
 DEFAULT_FLAG="YUVA{pr1v4t3_r3g1stry_l4y3r_3xf1ltr4t10n_9901}"
-FLAG_VALUE="${FLAG:-$DEFAULT_FLAG}"
+FLAG_VALUE="${CHALLENGE_FLAG:-${FLAG:-${DYNAMIC_FLAG:-$DEFAULT_FLAG}}}"
 mkdir -p /opt/vault
 echo "${FLAG_VALUE}" > /opt/vault/flag.txt
 chown -R vault:vault /opt/vault
@@ -13,8 +13,8 @@ chmod 700 /opt/vault
 chmod 400 /opt/vault/flag.txt
 
 # Unset and clear FLAG variable from environment to prevent env leaks
-unset FLAG || true
-export -n FLAG || true
+unset FLAG CHALLENGE_FLAG DYNAMIC_FLAG || true
+export -n FLAG CHALLENGE_FLAG DYNAMIC_FLAG || true
 
 # 2. Ensure SSH Host Keys
 ssh-keygen -A >/dev/null 2>&1 || true

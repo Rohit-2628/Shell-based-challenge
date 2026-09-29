@@ -5,7 +5,7 @@ echo "[*] Initializing D29 — Cloud Mirror Challenge..."
 
 # 1. Setup Flag securely
 DEFAULT_FLAG="YUVA{cl0ud_m1rr0r_ssrf_m3t4d4t4_0bj_st0r3_7a9e2f}"
-FLAG_VALUE="${FLAG:-$DEFAULT_FLAG}"
+FLAG_VALUE="${CHALLENGE_FLAG:-${FLAG:-${DYNAMIC_FLAG:-$DEFAULT_FLAG}}}"
 mkdir -p /opt/storage
 echo "${FLAG_VALUE}" > /opt/storage/flag.txt
 chown -R storage:storage /opt/storage
@@ -13,8 +13,8 @@ chmod 700 /opt/storage
 chmod 400 /opt/storage/flag.txt
 
 # Unset and clear FLAG variable from environment to prevent env leaks
-unset FLAG || true
-export -n FLAG || true
+unset FLAG CHALLENGE_FLAG DYNAMIC_FLAG || true
+export -n FLAG CHALLENGE_FLAG DYNAMIC_FLAG || true
 
 # 2. Seed Mock Object Store if empty
 if [ ! -d "/var/lib/latveria-storage/public-assets" ]; then

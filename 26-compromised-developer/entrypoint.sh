@@ -5,7 +5,7 @@ echo "[*] Initializing D26 - Compromised Developer Environment..."
 
 # 1. Setup Flag
 DEFAULT_FLAG="YUVA{c0mpr0m1s3d_d3v_h1st0ry_hm4c_auth_8821}"
-FLAG_VALUE="${FLAG:-$DEFAULT_FLAG}"
+FLAG_VALUE="${CHALLENGE_FLAG:-${FLAG:-${DYNAMIC_FLAG:-$DEFAULT_FLAG}}}"
 mkdir -p /opt/production
 echo "${FLAG_VALUE}" > /opt/production/flag.txt
 chown -R prod:prod /opt/production
@@ -13,7 +13,7 @@ chmod 700 /opt/production
 chmod 400 /opt/production/flag.txt
 
 # Wipe FLAG from environment so no child processes inherit it
-unset FLAG || true
+unset FLAG CHALLENGE_FLAG DYNAMIC_FLAG || true
 
 # 2. Ensure SSH Host Keys
 ssh-keygen -A >/dev/null 2>&1 || true

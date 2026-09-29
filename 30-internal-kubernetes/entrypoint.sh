@@ -3,7 +3,7 @@ set -e
 
 # Default synthetic flag if not injected dynamically
 DEFAULT_FLAG="YUVA{k8s_rb4c_s3rv1c3_4cc0unt_3x3c_p1v0t_9d82e1}"
-CHALLENGE_FLAG="${FLAG:-$DEFAULT_FLAG}"
+CHALLENGE_FLAG="${CHALLENGE_FLAG:-${FLAG:-${DYNAMIC_FLAG:-$DEFAULT_FLAG}}}"
 
 echo "[+] Initializing D30 — Internal Kubernetes Challenge Environment..."
 
@@ -14,6 +14,10 @@ echo "$CHALLENGE_FLAG" > /opt/orbital-defense/flag.txt
 chown -R defense-pod:defense-pod /opt/orbital-defense
 chmod 700 /opt/orbital-defense
 chmod 600 /opt/orbital-defense/flag.txt
+
+# Unset flag environment variables
+unset FLAG CHALLENGE_FLAG DYNAMIC_FLAG || true
+export -n FLAG CHALLENGE_FLAG DYNAMIC_FLAG || true
 
 # 2. Generate Mock Kubernetes TLS certificate & CA
 mkdir -p /etc/kubernetes/pki /tmp/k8s_mock
