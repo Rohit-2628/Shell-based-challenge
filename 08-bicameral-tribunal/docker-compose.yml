@@ -6,7 +6,6 @@ services:
     container_name: bicameral-tribunal
     ports:
       - "5008:5001"
-      - "1342:1342"
     environment:
       - FLAG=${FLAG:-YUVA{byz4nt1n3_qu0rum_c0ll4ps3d_by_d0ubl3_p0lygl0t_8831}}
     restart: unless-stopped

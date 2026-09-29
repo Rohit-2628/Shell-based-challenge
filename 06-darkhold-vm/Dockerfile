@@ -15,7 +15,8 @@ COPY handouts/ /app/handouts/
 COPY entrypoint.sh /entrypoint.sh
 
 RUN gcc -O2 /app/src/darkhold_vm.c -o /app/src/darkhold_vm && \
-    chmod +x /app/src/darkhold_vm /entrypoint.sh /app/src/darkhold_server.py
+    chmod +x /app/src/darkhold_vm /entrypoint.sh /app/src/darkhold_server.py && \
+    touch /flag.txt && chown ctf:ctf /flag.txt
 
 USER ctf
 

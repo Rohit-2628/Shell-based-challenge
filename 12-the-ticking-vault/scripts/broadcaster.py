@@ -35,6 +35,23 @@ def write_password_atomic(path: str, value: str) -> None:
     os.replace(tmp_path, path)  # atomic on Linux
 
 
+def write_issue_banner(payload: str) -> None:
+    """Write encrypted vault broadcast to SSH pre-login banner file."""
+    try:
+        tmp_banner = "/etc/issue.net.tmp"
+        with open(tmp_banner, "w") as f:
+            f.write(
+                f"\n================================================================================\n"
+                f"[DOOM SUBTERRANEAN TICKING VAULT — BROADCAST SUBSYSTEM]\n"
+                f"ENCRYPTED_VAULT_CODE:{payload}\n"
+                f"================================================================================\n\n"
+            )
+        os.chmod(tmp_banner, 0o644)
+        os.replace(tmp_banner, "/etc/issue.net")
+    except Exception:
+        pass
+
+
 def encrypt_payload(plaintext: str) -> bytes:
     iv = secrets.token_bytes(16)
     cipher = Cipher(algorithms.AES(KEY), modes.CBC(iv), backend=default_backend())
@@ -61,6 +78,7 @@ def broadcast_loop() -> None:
     while True:
         write_password_atomic(PASS_FILE, VAULT_PASSWORD)
         payload = encrypt_payload(VAULT_PASSWORD).hex()
+        write_issue_banner(payload)
         broadcast(f"ENCRYPTED_VAULT_CODE:{payload}")
         time.sleep(BROADCAST_INTERVAL)
 
@@ -100,6 +118,8 @@ def server_loop() -> None:
 
 def main() -> None:
     write_password_atomic(PASS_FILE, VAULT_PASSWORD)
+    payload = encrypt_payload(VAULT_PASSWORD).hex()
+    write_issue_banner(payload)
     threading.Thread(target=broadcast_loop, daemon=True).start()
     server_loop()
 

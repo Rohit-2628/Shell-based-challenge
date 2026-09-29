@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   latveria_ctf:
+    build: .
     image: 15-latveria-ctf-latveria_ctf:latest
     container_name: latveria-ctf-containment
     ports:

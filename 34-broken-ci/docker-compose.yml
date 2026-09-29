@@ -9,7 +9,6 @@ services:
     container_name: 34-broken-ci
     ports:
       - "8094:80"
-      - "2234:22"
     environment:
       - FLAG=${FLAG:-YUVA{d1nd_c1_runn3r_r3g1stry_pr0d_p1v0t_x04}}
       - PORT=80

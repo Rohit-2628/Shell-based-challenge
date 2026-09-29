@@ -2,11 +2,15 @@ version: '3.8'
 
 services:
   vault:
+    build: .
     image: 12-the-ticking-vault-vault:latest
     container_name: the-ticking-vault
     ports:
       - "2224:22"
-      - "9001:9000"
     environment:
       - FLAG=${FLAG:-YUVA{t1ck1ng_v4ult_c0r3_s3cur1ty_d3fus3d_9842}}
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M

@@ -6,7 +6,6 @@ services:
     container_name: project-victor
     ports:
       - "5004:5000"
-      - "1339:1339"
     environment:
       - FLAG=${FLAG:-YUVA{d00m_m0d3l_gu4rdr41ls_sh4tt3r3d_b3y0nd_r3p41r_1048}}
     restart: unless-stopped

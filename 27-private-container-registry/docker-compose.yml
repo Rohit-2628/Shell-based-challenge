@@ -9,7 +9,6 @@ services:
     container_name: 27-private-container-registry
     ports:
       - "8081:80"
-      - "2228:22"
     environment:
       - FLAG=${FLAG:-YUVA{pr1v4t3_r3g1stry_l4y3r_3xf1ltr4t10n_9901}}
       - PORT=80

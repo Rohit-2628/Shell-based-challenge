@@ -9,11 +9,10 @@ description: 'Doctor Doom''s subterranean ticking vault broadcasts AES-256 encry
 docker:
   internal_ports:
   - 2224
-  - 9001
 connection:
   protocol: ssh
   port: 2224
 credentials:
   username: player
-  password: (rotating encrypted broadcast on port 9001)
+  password: (encrypted in SSH pre-login broadcast banner)
 flag: YUVA{t1ck1ng_v4ult_c0r3_s3cur1ty_d3fus3d_9842}

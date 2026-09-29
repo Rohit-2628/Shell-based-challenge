@@ -3,9 +3,11 @@ set -e
 
 echo "[+] Initializing CI runner security and user environment..."
 
-# Create operator group and user
-if ! id -u operator >/dev/null 2>&1; then
+# Create operator group and user safely
+if ! getent group operator >/dev/null 2>&1; then
     groupadd -g 1000 operator
+fi
+if ! id -u operator >/dev/null 2>&1; then
     useradd -u 1000 -g operator -m -s /bin/bash operator
     echo "operator:operator" | chpasswd
 fi

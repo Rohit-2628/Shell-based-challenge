@@ -7,7 +7,8 @@ RUN useradd -m -u 1001 ctf
 COPY src/ /app/src/
 COPY handouts/ /app/handouts/
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh /app/src/golem_server.py
+RUN chmod +x /entrypoint.sh /app/src/golem_server.py && \
+    touch /flag.txt && chown ctf:ctf /flag.txt
 
 USER ctf
 

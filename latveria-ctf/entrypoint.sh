@@ -42,20 +42,26 @@ chown root:root /run/latveria/display
 /usr/local/bin/latveria-failsafe &
 /usr/local/bin/doombot-daemon &
 
-# 8. Give the daemons a moment to bind sockets/files before the player
-#    lands in a shell.
-sleep 1
+# 8. Configure SSH credentials and permissions
+DYNAMIC_PASS=${CTF_PASSWORD:-"doom_rules_all"}
+echo "latverian_conscript:$DYNAMIC_PASS" | chpasswd
+mkdir -p /var/run/sshd /run/sshd
 
-# 9. Launch the player into tmux: pane 0 = interactive shell as the
-#    conscript, pane 1 = pinned live clock ticker (read-only).
+# Setup interactive shell hook to attach tmux if interactive TTY
+cat >> /home/latverian_conscript/.bashrc <<'EOF'
+if [ -t 1 ] && [ -z "$TMUX" ] && tmux has-session -t main 2>/dev/null; then
+    tmux attach -t main
+fi
+EOF
+chown latverian_conscript:latverian_conscript /home/latverian_conscript/.bashrc
+
+# 9. Pre-seed the tmux session: pane 0 = interactive shell, pane 1 = pinned live clock ticker
 su -s /bin/bash -c '
     tmux new-session -d -s main -n containment
-    # pane 0: show the briefing, then hand control to a real login shell.
-    # When that shell exits (player types "exit"), tear the whole tmux
-    # session down so the connection cleanly closes instead of leaving
-    # only the clock pane visible.
     tmux send-keys -t main "clear; cat /etc/motd; bash --login; tmux kill-session -t main" C-m
     tmux split-window -h -t main "/usr/local/bin/clock-pane"
     tmux select-pane -t main:0.0
-    tmux attach -t main
-' latverian_conscript
+' latverian_conscript 2>/dev/null || true
+
+# 10. Start the SSH Server in the foreground
+exec /usr/sbin/sshd -D

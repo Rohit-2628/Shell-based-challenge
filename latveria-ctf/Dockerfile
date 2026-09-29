@@ -14,7 +14,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libcap2-bin \
         sudo \
         procps \
+        openssh-server \
     && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /var/run/sshd /run/sshd && \
+    echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && \
+    ssh-keygen -A
 
 # --- Users ---------------------------------------------------------------
 RUN useradd -m -s /bin/bash latverian_conscript
@@ -54,5 +59,5 @@ RUN chmod 755 /entrypoint.sh
 # /proc from inside an unprivileged image build). entrypoint.sh attempts it
 # defensively; document this requirement clearly for operators too.
 
-EXPOSE 1337
+EXPOSE 22 1337
 ENTRYPOINT ["/entrypoint.sh"]
